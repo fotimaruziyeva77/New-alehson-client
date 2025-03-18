@@ -42,7 +42,7 @@ const Contact = () => {
             </div>
 			{/*  */}
 		<div className='flex items-center justify-center bg-gray-100 p-2'>
-			<div className='flex w-full max-w-4xl m-5 min-h-[10vh] bg-blue-700 shadow-lg overflow-hidden'>
+			<div className='flex w-full max-w-4xl m-10 min-h-[10vh] bg-blue-700 shadow-lg overflow-hidden'>
 				<div className='w-1/2 p-8'>
 					<Link href={'/'} className='text-xl font-semibold text-white'>Let's Connect</Link>
 
