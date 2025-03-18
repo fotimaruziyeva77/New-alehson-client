@@ -1,13 +1,21 @@
 import { footerImages, footerLinks } from "@/constants";
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const Footer = () => {
   return (
     <footer className="bg-[#2A2A2A] text-gray-300 py-8">
       <div className="container mx-auto px-5 grid grid-cols-1 md:grid-cols-3 gap-8">
         <div>
-          <Image src={"/ehson.png"} alt="ehson" width={80} height={80} />
+          <Image
+            src={"/ehson.png"}
+            alt="ehson"
+            width={80}
+            height={80}
+            style={{ width: "auto", height: "auto" }}
+          />
+
           <p className="mt-3 text-sm">
             Lorem Ipsum is simply dummy text of the industry's since the
             unknown. Lorem Ipsum is simply dummy text of the industry.
@@ -32,10 +40,14 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold text-white">Quick Links</h3>
           <div className="grid grid-cols-2 gap-3 mt-3 text-sm">
-            {footerLinks.map((link, index) => (
-              <a key={index} href="#" className="hover:text-white transition">
+            {footerLinks.map((link) => (
+              <Link
+                key={link.id}
+                href={"/"}
+                className="hover:text-white transition"
+              >
                 {link.name}
-              </a>
+              </Link>
             ))}
           </div>
         </div>

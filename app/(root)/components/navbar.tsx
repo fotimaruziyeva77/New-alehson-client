@@ -6,6 +6,7 @@ import Mobile from "./mobile";
 import { Button } from "@/components/ui/button";
 
 function Navbar() {
+
   return (
     <nav className="fixed top-0 left-0 w-full bg-white shadow-md z-50 flex justify-between items-center py-2 px-6 md:px-20">
       {/* Logo */}
@@ -17,9 +18,9 @@ function Navbar() {
       <div className="hidden md:flex space-x-4">
         {navLink.map((link) => (
           <Link
-            key={link.name}
+            key={link.id}
             href={link.path}
-            className="text-gray-600 hover:text-blue-600 transition"
+            className="text-gray-600 hover:text-yellow-500 transition"
           >
             {link.name}
           </Link>

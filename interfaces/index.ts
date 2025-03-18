@@ -11,3 +11,59 @@ export interface CategoryTypes {
 	image: string
 	subcategories: SubCategoryTypes[]
 }
+
+export interface PaginationApplication {
+	count: number;
+	next: string;
+	previous: string;
+	results: ApplicationTypes[];
+}
+export interface ApplicationTypes {
+	id: number
+	petition_id: number
+	full_name: string
+	phone_number: string
+	birthday: string
+	information: string
+	plastic_card: string
+	region: string
+	category: number
+	view_count: number
+	passport_number: string
+	image_urls: string[]
+	images: string
+	is_active: boolean
+}
+
+export interface NewsTypes {
+	id: number;
+	title: string;
+	description: string;
+	content: string;
+	region: string;
+	image: string;
+	created_date: string;
+	view_count: number;
+	slug: string;
+  }
+
+  export interface AboutUsTypes {
+	image: string;
+	title: string;
+	description: string;
+  }
+  export interface HelpTypes {
+	title: string;
+	description: string;
+	image: string;
+  }
+  export interface HomeTypes {
+	id: number;
+	title: string;
+	image: string;
+	image2: string;
+	image3: string;
+	image4: string;
+	titleAbaut: string;
+	description: string;
+  }

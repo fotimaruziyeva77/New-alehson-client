@@ -28,9 +28,8 @@ function CategoryPage() {
     <div className='mt-30'>
     <div className=" px-10 mx-auto">
     <div className="flex justify-between px-10 ">
-    <h1 className="text-xl text-gray-800 ">Category</h1>
+    <h1 className="text-xl text-gray-800 ">Kategoriyalar</h1>
     <Link  href={'/category'}>
-    <Button className="border border-[#3A40D8] text-[#3A40D8] bg-white  hover:bg-[#2E34A7] hover:text-white py-5 px-8 rounded cursor-pointer">Barchasini ko'rish <MoveRight/></Button>
     </Link>
     </div>
       <div className="grid md:grid-cols-4 gap-6 p-6">
@@ -45,12 +44,9 @@ function CategoryPage() {
               <h3 className="text-lg font-semibold mb-2">{donation.name}</h3>
               <p className="text-gray-500 text-sm mb-4">
               </p>
-              <div className="flex items-center justify-between">
-                    <div className="flex items-center text-blue-600 text-sm">
-                      <User className="w-4 h-4 mr-1" /> Adam
-                    </div>
-                    <Button variant="outline" className="border border-[#3A40D8] text-[#3A40D8] bg-white hover:bg-[#2E34A7] hover:text-white py-5 px-8 rounded cursor-pointer">
-                      Donate Now →
+              <div className="flex items-center justify-center mt-10">
+                    <Button variant="outline" className="border border-yellow-500 text-black bg-white hover:bg-yellow-500 hover:text-white py-5 px-8 rounded cursor-pointer">
+                    
                     </Button>
                   </div>
             </CardContent>

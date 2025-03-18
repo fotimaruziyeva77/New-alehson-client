@@ -23,7 +23,7 @@ const Mobile = () => {
         <div className="flex flex-col space-y-2">
           {navLink.map((nav) => (
             <Link
-              key={nav.name}
+              key={nav.id}
               href={nav.path}
               className={cn(
                 "hover:bg-gray-200 py-2 px-3 cursor-pointer rounded-sm transition-colors flex items-center gap-2",

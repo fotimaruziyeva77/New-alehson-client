@@ -5,4 +5,7 @@ export const API_REQUEST = {
 	categories: `${baseUrl}/categories/`,
 	subcategories: `${baseUrl}/subcategories/`,
 	applications: `${baseUrl}/application/`,
+	aboutsettings: `${baseUrl}/about-settings/`,
+	homesettings: `${baseUrl}/home-settings/`,
+	helpsettings:`${baseUrl}/site-help-settings/`
 }
