@@ -1,4 +1,4 @@
-import { footerImages, footerLinks } from "@/constants";
+import { footerImages, footerLinks, navLink } from "@/constants";
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,13 +17,12 @@ const Footer = () => {
           />
 
           <p className="mt-3 text-sm">
-            Lorem Ipsum is simply dummy text of the industry's since the
-            unknown. Lorem Ipsum is simply dummy text of the industry.
+          Alehson - Mehr va saxovatni ulashuvchi platforma
           </p>
         </div>
 
         <div>
-          <h3 className="text-lg font-semibold text-white">Gallery</h3>
+          <h3 className="text-lg font-semibold text-white">Rasmlar</h3>
           <div className="grid grid-cols-3 gap-2 mt-3">
             {footerImages.map((image) => (
               <Image
@@ -38,9 +37,9 @@ const Footer = () => {
         </div>
 
         <div>
-          <h3 className="text-lg font-semibold text-white">Quick Links</h3>
+          <h3 className="text-lg font-semibold text-white">Sahifalar</h3>
           <div className="grid grid-cols-2 gap-3 mt-3 text-sm">
-            {footerLinks.map((link) => (
+            {navLink.map((link) => (
               <Link
                 key={link.id}
                 href={"/"}
@@ -56,14 +55,14 @@ const Footer = () => {
       {/* Bottom Section - Copyright & Socials */}
       <div className="border-t border-gray-700 mt-10 pt-5 text-center">
         <p className="text-sm">
-          © All rights reserved 2023{" "}
-          <span className="text-blue-400">Charityshay</span>
+          © All rights reserved 2025{" "}
+          <span className="text-blue-400">Alehson</span>
         </p>
         <div className="flex justify-center space-x-4 mt-3">
-          <Facebook className="w-5 h-5 cursor-pointer hover:text-white" />
+         <Link href={'https://www.instagram.com/sifatedu/'}>
           <Instagram className="w-5 h-5 cursor-pointer hover:text-white" />
-          <Linkedin className="w-5 h-5 cursor-pointer hover:text-white" />
-          <Twitter className="w-5 h-5 cursor-pointer hover:text-white" />
+          </Link>
+        
         </div>
       </div>
     </footer>

@@ -8,6 +8,7 @@ import axios from "axios";
 import { API_REQUEST } from "@/lib/apiRequest";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { Breadcrumb,BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 
 const BlogPage = () => {
   const [applications, setApplications] = useState<ApplicationTypes | null>(
@@ -19,7 +20,7 @@ const BlogPage = () => {
   const petition_id = pathname.split("/").pop();
  const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    
+
   useEffect(() => {
     if (!petition_id) return;
     console.log("Fetching news for ID:", petition_id);
@@ -88,6 +89,31 @@ const BlogPage = () => {
   }
   return (
     <div className="mt-20">
+      <div
+              className="w-full h-[300px] md:h-[400px] bg-center bg-cover flex flex-col justify-center items-center"
+              style={{ backgroundImage: "url('/edit.png')" }}
+            >
+              <h1 className="text-white text-2xl md:text-4xl font-bold text-center">
+               Ehson qilish
+              </h1>
+              <div className="mt-4 md:mt-10">
+                <Breadcrumb>
+                  <BreadcrumbList className="text-white  text-lg md:text-xl">
+                    <BreadcrumbItem>
+                      <BreadcrumbLink href="/" className="hover:text-yellow-500">
+                        Bosh sahifa
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                      <BreadcrumbLink href="/helpme" className="hover:text-yellow-500">
+                        Ehson qilish
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                  </BreadcrumbList>
+                </Breadcrumb>
+              </div>
+            </div>
       <div className="p-6 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="md:col-span-2">
@@ -104,7 +130,7 @@ const BlogPage = () => {
                 <div className="flex space-x-2 mt-4">
                   {applications.images?.length > 0 && (
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
-                      {applications.images?.map((url) => (
+                      {applications.images.map((url) => (
                         <img
                           key={url.id}
                           src={url}
@@ -131,18 +157,6 @@ const BlogPage = () => {
           </div>
 
           <aside className="space-y-6">
-            <Card>
-              <CardContent className="p-4">
-                <h3 className="text-lg font-semibold">Kategoriyalar</h3>
-                {categories.map((category) => (
-                  <ul className="mt-2 space-y-2">
-                    <Link href={`/category/${category.id}`}>
-                      <li>{category.name}</li>
-                    </Link>
-                  </ul>
-                ))}
-              </CardContent>
-            </Card>
             <Card>
               <CardContent className="p-4">
                 <div className="flex flex-col gap-4 items-center w-full">

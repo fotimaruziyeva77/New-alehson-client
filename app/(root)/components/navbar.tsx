@@ -12,7 +12,7 @@ function Navbar() {
       {/* Logo */}
       <div className="flex items-center space-x-2">
         <Link href={'/'}>
-        <Image src={"/ehson.png"} alt="ehson" width={80} height={80} />
+        <Image src={"/ehson-no-text.png"} alt="ehson" width={80} height={80} />
         </Link>
       </div>
       <div className="hidden md:flex space-x-4">
@@ -27,7 +27,7 @@ function Navbar() {
         ))}
       </div>
       <Link href="/help">
-        <Button className="hidden md:block bg-yellow-500 text-white px-5 py-2 rounded-lg hover:bg-yellow-400 transition cursor-pointer">
+        <Button className="hidden md:block  px-5 py-2 rounded-lg  border-blue-500 text-blue-500 border bg-white hover:bg-blue-500 hover:text-white transition cursor-pointer">
           Saytga yordam &rarr;
         </Button>
       </Link>

@@ -7,6 +7,7 @@
   import Link from "next/link";
   import React, { useEffect, useState } from "react";
   import { format } from "date-fns";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 
   function NewsPage() {
     const [news, setNews] = useState<NewsTypes[]>([]);
@@ -58,20 +59,32 @@
     }
 
     return (
-      <div className="px-10 mx-auto mt-25">
+      <div>
         {/* Banner Section */}
-        <div className="relative w-full h-[600px] flex flex-col items-center overflow-hidden">
-          <div className="absolute w-full p-5 overflow-hidden">
-            <img
-              src="https://picsum.photos/1200/600"
-              alt="News banner"
-              className="w-full h-[700px] object-cover"
-            />
-          </div>
-          <div className="absolute bottom-10 w-4/5 left-1/2 -translate-x-1/2 text-white p-5 flex flex-col gap-7">
-            <h2 className="text-2xl font-bold">
-              Bizning yangiliklardan ogoh bo'ling
-            </h2>
+        <div
+          className="w-full h-[400px] bg-cover bg-center"
+          style={{ backgroundImage: "url('/edit.png')" }}
+        >
+          <h1 className="text-white text-5xl font-bold text-center pt-20">
+            Yangiliklar
+          </h1>
+          <div className="flex justify-center mt-10 text-white">
+            <Breadcrumb>
+              <BreadcrumbList className="text-white">
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="/" className="hover:text-yellow-500">
+                    Bosh sahifa
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="/category" className="hover:text-yellow-500">
+                    Yangiliklar
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+              </BreadcrumbList>
+            </Breadcrumb>
           </div>
         </div>
 

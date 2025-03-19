@@ -1,328 +1,303 @@
-'use client'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
+"use client";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { cardList, helpOptions } from "@/constants";
+import { ChevronRight, MoveRight, User } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { API_REQUEST } from "@/lib/apiRequest";
 import {
-	Carousel,
-	CarouselContent,
-	CarouselItem,
-	CarouselNext,
-	CarouselPrevious,
-} from '@/components/ui/carousel'
-import { cardList } from '@/constants'
-import { ChevronRight, MoveRight, User } from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import { API_REQUEST } from '@/lib/apiRequest'
-import {
-	ApplicationTypes,
-	CategoryTypes,
-	HomeTypes,
-	NewsTypes,
-} from '@/interfaces'
+  ApplicationTypes,
+  CategoryTypes,
+  HomeTypes,
+  NewsTypes,
+} from "@/interfaces";
 
 function Homepage() {
-	const [categories, setCategories] = useState<CategoryTypes[]>([])
-	const [news, setNews] = useState<NewsTypes[]>([])
-	const [applications, setApplications] = useState<ApplicationTypes[]>([])
-	const [home, setHome] = useState<HomeTypes>()
-	const [loading, setLoading] = useState(true)
-	const [error, setError] = useState<string | null>(null)
+  const [categories, setCategories] = useState<CategoryTypes[]>([]);
+  const [news, setNews] = useState<NewsTypes[]>([]);
+  const [applications, setApplications] = useState<ApplicationTypes[]>([]);
+  const [home, setHome] = useState<HomeTypes>();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-	// categories
-	useEffect(() => {
-		axios
-			.get(API_REQUEST.categories)
-			.then(res => setCategories(res.data))
-			.catch(err => console.error('Xatolik:', err))
-	}, [])
+  // categories
+  useEffect(() => {
+    axios
+      .get(API_REQUEST.categories)
+      .then((res) => setCategories(res.data))
+      .catch((err) => console.error("Xatolik:", err));
+  }, []);
 
-	// news
-	useEffect(() => {
-		const fetchData = async () => {
-			await axios
-				.get(API_REQUEST.news)
-				.then(res => setNews(res.data.results))
-				.catch(err => console.log(err))
-			setLoading(false)
-		}
-		fetchData()
-	}, [])
-	// applications
-	useEffect(() => {
-		const fetchApplications = async () => {
-			try {
-				const res = await axios.get(API_REQUEST.applications)
-				console.log('API Response:', res.data)
-				setApplications(res.data.results || [])
-				console.log('Applications State:', applications)
-			} catch (err) {
-				console.error('Xatolik yuz berdi:', err)
-			}
-			setLoading(false)
-		}
-		fetchApplications()
-	}, [])
+  // news
+  useEffect(() => {
+    const fetchData = async () => {
+      await axios
+        .get(API_REQUEST.news)
+        .then((res) => setNews(res.data.results))
+        .catch((err) => console.log(err));
+      setLoading(false);
+    };
+    fetchData();
+  }, []);
+  // applications
+  useEffect(() => {
+    const fetchApplications = async () => {
+      try {
+        const res = await axios.get(API_REQUEST.applications);
+        console.log("API Response:", res.data);
+        setApplications(res.data.results || []);
+        console.log("Applications State:", applications);
+      } catch (err) {
+        console.error("Xatolik yuz berdi:", err);
+      }
+      setLoading(false);
+    };
+    fetchApplications();
+  }, []);
 
-	// home
-	useEffect(() => {
-		const fetchHome = async () => {
-			await axios
-				.get(API_REQUEST.homesettings)
-				.then(res => setHome(res.data[0]))
-				.catch(err => console.log(err))
-			setLoading(false)
-		}
+  // home
+  useEffect(() => {
+    const fetchHome = async () => {
+      await axios
+        .get(API_REQUEST.homesettings)
+        .then((res) => setHome(res.data[0]))
+        .catch((err) => console.log(err));
+      setLoading(false);
+    };
 
-		fetchHome()
-	}, [])
-	if (loading) {
-		return (
-			<div className='flex justify-center items-center h-screen'>
-				<div className='lds-spinner'>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-				</div>
-			</div>
-		)
-	}
+    fetchHome();
+  }, []);
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="lds-spinner">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    );
+  }
 
-	if (error) {
-		return (
-			<div className='flex justify-center items-center h-screen'>
-				<p className='text-red-500'>{error}</p>
-			</div>
-		)
-	}
-	return (
-		<div className=' mx-auto px-4 sm:px-6 md:px-10 mt-20 pt-20'>
-			<div className='flex flex-col md:flex-row justify-around items-center gap-10'>
-				<div className='text-center md:text-left'>
-					<h1 className='text-4xl md:text-6xl font-semibold leading-tight'>
-						{home?.title}
-					</h1>
-					<div className='flex flex-wrap justify-center md:justify-start md:flex-nowrap gap-4 mt-6'>
-						<Link href={'/helpme'}>
-							<Button className='py-7 px-10 flex items-center gap-2 text-lg font-medium rounded-lg transition duration-300 ease-in-out bg-yellow-500 hover:bg-yellow-400  text-white border border-yellow-400 cursor-pointer'>
-								Ehsonga hissa qo'shish
-								<ChevronRight />
-							</Button>
-						</Link>
-						<Link href={'/help'}>
-							<Button className='py-7 px-10 flex items-center gap-2 text-lg font-medium rounded-lg transition duration-300 ease-in-out bg-white text-yellow-500 border border-yellow-500 hover:bg-yellow-500 hover:text-white cursor-pointer'>
-								Qo'llab-quvvatlash <ChevronRight />
-							</Button>
-						</Link>
-					</div>
-				</div>
-				<div className='w-60 md:w-96'>
-					<img
-						src={home?.image}
-						alt='help'
-						className=' object-cover w-[800] h-[400] md:w-full md:h-full'
-					/>
-				</div>
-			</div>
-			<br /> <br />
-			<div>
-				<h1 className='text-xl md:text-5xl mt-20 text-center'>
-					Bir inson hayotini o'zgartirishga tayyormisiz?
-				</h1>
-			</div>
-			<div className='mt-20 px-4 sm:px-6 md:px-10 mx-auto'>
-				<Carousel className='w-full px-4 sm:px-6 md:px-10 mt-10 mb-5'>
-					<CarouselContent>
-						{categories.map(item => (
-							<CarouselItem
-								key={item.id}
-								className='basis-full sm:basis-1/2 lg:basis-1/4'
-							>
-								<Card className='overflow-hidden shadow-lg'>
-									<img
-										src={item.image}
-										alt='item'
-										className='px-5 h-52 rounded object-cover w-full'
-									/>
-									<CardContent className='p-4'>
-										<h3 className='text-lg font-semibold mb-2 text-center'>
-											{item.name}
-										</h3>
-										<div className='flex items-center justify-center mt-5'>
-											<Link href={`/application/${item.id}`}>
-												<Button
-													variant='outline'
-													className='border border-yellow-200 text-yellow-500 hover:bg-yellow-500 bg-white hover:text-white py-5 px-8 rounded cursor-pointer'
-												>
-													Ko'proq ko'rish
-												</Button>
-											</Link>
-										</div>
-									</CardContent>
-								</Card>
-							</CarouselItem>
-						))}
-					</CarouselContent>
-					<CarouselPrevious />
-					<CarouselNext />
-				</Carousel>
-			</div>
-			<div className='max-w-8xl mx-auto p-10 bg-[#F4F1FA] rounded-lg shadow-lg flex flex-col md:flex-row items-center justify-center gap-8'>
-				<div className='w-full flex flex-col items-center gap-4 mb-10'>
-					<img
-						src={home?.image2}
-						alt='children'
-						width={600}
-						height={200}
-						className='rounded w-[600] h-[200] object-cover'
-					/>
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-red-500">{error}</p>
+      </div>
+    );
+  }
+  return (
+    <div className=" mx-auto px-4 sm:px-6 md:px-10 mt-20 pt-20">
+      <div className="flex flex-col md:flex-row justify-around items-center gap-6 md:gap-20 max-w-screen-xl mx-auto px-4 md:px-8">
+        <div className="text-center md:text-left flex-1">
+          <h1 className="text-3xl md:text-5xl font-semibold leading-tight">
+            <span className="text-blue-500">"Ehson"</span> – ezgulikning{" "}
+            <br className="hidden md:block" /> cheksiz manbai
+          </h1>
+          <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-6">
+            <Link href="/helpme">
+              <Button className="py-4 px-6 md:py-5 md:px-8 flex items-center gap-2 text-base md:text-lg font-medium rounded-lg transition duration-300 ease-in-out  border-blue-500 text-blue-500 border bg-white hover:bg-blue-500 hover:text-white cursor-pointer">
+                Ehsonga hissa qo'shish <ChevronRight />
+              </Button>
+            </Link>
+            <Link href="/help">
+              <Button className="py-4 px-6 md:py-5 md:px-8 flex items-center gap-2 text-base md:text-lg font-medium rounded-lg transition duration-300 ease-in-out  border-blue-500 text-blue-500 border bg-white hover:bg-blue-500 hover:text-white cursor-pointer">
+                Qo'llab-quvvatlash <ChevronRight />
+              </Button>
+            </Link>
+          </div>
+        </div>
+        <div className="w-full max-w-xs md:max-w-md flex-1">
+          <img
+            src="/5.png"
+            alt="help"
+            className="object-cover w-full h-auto rounded-full "
+          />
+        </div>
+      </div>
+      <br /> <br />
+      <div>
+        <h1 className="text-xl md:text-5xl mt-20 text-center">
+          Bir inson hayotini o'zgartirishga tayyormisiz?
+        </h1>
+      </div>
+      <div className="container mx-auto py-12 px-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {helpOptions.map((item) => (
+            <div
+              key={item.id}
+              className="border rounded-lg p-6 text-center shadow-md hover:shadow-lg transition-all duration-300"
+            >
+              <div className="flex justify-center mb-4">
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  width={150}
+                  height={150}
+                />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+              <p className="text-gray-600 mb-4 line-clamp-2">
+                {item.description}
+              </p>
+              <button className="border border-blue-500 text-blue-500 px-4 py-2 rounded-lg hover:bg-blue-500 hover:text-white transition">
+                Batafsil
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="max-w-8xl mx-auto p-4 sm:p-6 md:p-10 bg-[#F4F1FA] rounded-lg shadow-lg flex flex-col md:flex-row items-center justify-center gap-6 sm:gap-8">
+      {/* Rasm qismi */}
+      <div className="w-full flex flex-col items-center gap-3 sm:gap-4 mb-6 md:mb-10">
+        <img
+          src="/1.png"
+          alt="children"
+          className="rounded w-full h-[200px] sm:h-[250px] md:h-[300px] object-cover"
+        />
 
-					<div className='flex gap-4 flex-wrap justify-center'>
-						{home?.image2 && (
-							<img
-								src={home?.image3}
-								alt='help'
-								className='rounded-lg shadow-md w-[290] h-[220] object-cover'
-							/>
-						)}
-						{home?.image3 && (
-							<img
-								src={home?.image4}
-								alt='help'
-								className='rounded-lg shadow-md w-[290] h-[220] object-cover'
-							/>
-						)}
-					</div>
-				</div>
+        <div className="flex gap-2 sm:gap-4 flex-wrap justify-center">
+          <img
+            src="/2.png"
+            alt="help"
+            className="rounded-lg shadow-md w-[100%] sm:w-[290px] h-[180px] sm:h-[200px] object-cover"
+          />
 
-				<section className='px-6 md:px-16 w-full'>
-					<div className='max-w-4xl mx-auto'>
-						<h2 className='text-3xl md:text-4xl font-bold text-gray-900 md:text-left'>
-							{home?.titleAbaut}
-						</h2>
-						<p className='text-gray-600 mt-4 text-center md:text-left'>
-							{home?.description}
-						</p>
-						<div className='flex justify-center md:justify-start'>
-							<Link href={'/helpme'} className='cursor-pointer'>
-								<Button className='mt-6 px-6 py-6 bg-yellow-500 border border-yellow-500 text-white font-semibold rounded-lg hover:bg-yellow-500 transition duration-300 cursor-pointer'>
-									Ehsonga hissa qo‘shish
-								</Button>
-							</Link>
-						</div>
-					</div>
-				</section>
-			</div>
-			<div className='mt-20 px-4 sm:px-6 md:px-10 mx-auto'>
-				<div className='flex justify-between px-4 sm:px-6 md:px-10'>
-					<h1 className='text-xl text-gray-800'>
-						Kambag'al odamlar uchun xayriya qiling.
-					</h1>
-					<Link href={'/category'}>
-						<Button className='border border-yellow-200 text-yellow-500 bg-white hover:bg-yellow-500 hover:text-white py-3 px-6 rounded cursor-pointer flex items-center gap-2'>
-							Barchasini ko'rish <MoveRight />
-						</Button>
-					</Link>
-				</div>
-				<Carousel className='w-full px-4 sm:px-6 md:px-10 mt-5'>
-					<CarouselContent className='flex gap-4 p-4 overflow-hidden'>
-						{applications.map((item, idx) => (
-							<CarouselItem
-								key={idx}
-								className='basis-full sm:basis-1/2 lg:basis-1/4'
-							>
-								<Card className='overflow-hidden shadow-lg'>
-									{item.images && item.images.length > 0 ? (
-										<img
-											src={item.images[0]}
-											alt={item.full_name}
-											className='h-48 px-2 w-full object-cover'
-										/>
-									) : (
-										<div className='h-40 bg-gray-200 flex items-center justify-center'>
-											<span>Rasm mavjud emas</span>
-										</div>
-									)}
-									<CardContent className='p-4'>
-										<div className='mb-2'>
-											<h3 className='text-lg font-semibold'>
-												{item.full_name}
-											</h3>
-											<p className='text-sm text-gray-600 line-clamp-1'>
-												{item.information}
-											</p>
-										</div>
-										<div className='flex items-center justify-between mt-10'>
-											<div className='flex items-center text-yellow-500 text-sm'>
-												<User className='w-4 h-4 mr-1' /> {item.full_name}
-											</div>
-											<Link href={`/application/${item.petition_id}`}>
-												<Button
-													variant='outline'
-													className='border border-yellow-500 text-yellow-500 bg-white hover:bg-yellow-500 hover:text-white py-2 px-4 rounded cursor-pointer'
-												>
-													Ko'proq ko'rish
-												</Button>
-											</Link>
-										</div>
-									</CardContent>
-								</Card>
-							</CarouselItem>
-						))}
-					</CarouselContent>
-					<CarouselPrevious />
-					<CarouselNext />
-				</Carousel>
-			</div>
-			<div className='mt-20 px-10 mx-auto'>
-				<div className='flex justify-between px-10 '>
-					<h1 className='text-xl text-gray-800 '>Yangiliklar</h1>
-					<Link href={'/category'}>
-						<Button className='border border-yellow-300  text-yellow-500 bg-white  hover:bg-yellow-500 hover:text-white py-5 px-8 rounded cursor-pointer'>
-							Barchasini ko'rish <MoveRight />
-						</Button>
-					</Link>
-				</div>
-				<div className='grid md:grid-cols-4 gap-6 p-6'>
-					{news.map(news => (
-						<Card key={news.id} className='overflow-hidden shadow-lg'>
-							<Link href={`/newsid/${news.id}`}>
-								<img
-									src={`${process.env.NEXT_PUBLIC_APP_API_ENDPOINT}/media/${news.image}`}
-									alt='item'
-									className='w-full h-48 object-cover cursor-pointer px-2 rounded'
-								/>
-							</Link>
-							<CardContent className='p-4'>
-								<h3 className='text-lg font-semibold mb-2 line-clamp-1'>
-									{news.title}
-								</h3>
-								<p className='line-clamp-1'>{news.description}</p>
-								<div className='flex items-center justify-center mt-10'>
-									<Button
-										variant='outline'
-										className='border border-yellow-300  text-yellow-500 bg-white  hover:bg-yellow-500 hover:text-white py-5 px-8 rounded cursor-pointer'
-									>
-										Read More →
-									</Button>
-								</div>
-							</CardContent>
-						</Card>
-					))}
-				</div>
-			</div>
-		</div>
-	)
+          <img
+            src="/3.png"
+            alt="help"
+            className="rounded-lg shadow-md w-[100%] sm:w-[290px] h-[180px] sm:h-[200px] object-cover"
+          />
+        </div>
+      </div>
+
+      {/* Matn qismi */}
+      <section className="px-3 sm:px-6 md:px-16 w-full">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl sm:text-2xl md:text-4xl font-bold text-gray-900 text-center md:text-left">
+            Yordam bering, umid ulashing!
+          </h2>
+          <p className="text-gray-600 mt-3 sm:mt-4 text-sm sm:text-base text-center md:text-left leading-relaxed ">
+          Alehson – mehr-shafqat va saxovat tamoyillariga asoslangan
+              notijorat tashkilot bo‘lib, ehtiyojmand bolalarning hayotiga
+              ijobiy ta’sir ko‘rsatishga intiladi. Bizning asosiy maqsadimiz har
+              bir bolaning xavfsiz muhitda yashashi, sog‘lom rivojlanishi va
+              sifatli ta’lim olish imkoniyatiga ega bo‘lishini ta’minlashdir.
+              Dunyoda millionlab bolalar ochlik, yetarli boshpana yo‘qligi,
+              sog‘liqni saqlash xizmatlaridan foydalanish imkoniyatining
+              cheklanganligi va sifatli ta’limga ega bo‘lishdagi qiyinchiliklar
+              tufayli qiyin sharoitlarda yashaydi. Biz aynan shu bolalarga
+              yordam berish uchun harakat qilamiz. Sizning mehribonligingiz va
+              saxovatingiz tufayli biz ularga oziq-ovqat, xavfsiz boshpana,
+              tibbiy xizmatlar va ta’lim dasturlarini yetkazib bera olamiz. Biz
+              bolalarning orzularini ro‘yobga chiqarish, ularga eng yaxshi
+              imkoniyatlarni yaratish va kelajakda o‘z hayotlarini o‘zgartirish
+              uchun zarur bo‘lgan bilim va ko‘nikmalar bilan ta’minlash yo‘lida
+              harakat qilamiz. Bu faqat birgalikdagi sa’y-harakatlarimiz bilan
+              amalga oshishi mumkin. Sizning xayriyangiz har bir bolaning
+              hayotida haqiqiy farq yaratadi. Sizning yordamlaringiz orqali biz
+              bolalarga sifatli ta’lim olish, yaxshi ovqatlanish, tibbiy
+              ko‘riklardan o‘tish va xavfsiz muhitda ulg‘ayish imkoniyatini
+              beramiz. Alehson orqali xayriya qilish orqali siz dunyo bo‘ylab
+              minglab bolalarning hayotini saqlab qolish va yaxshilashga o‘z
+              hissangizni qo‘shasiz. Unutmang, har qanday yordam – qanchalik
+              kichik bo‘lmasin – ulkan o‘zgarishlar sari qadamdir. Sizning
+              saxovatingiz tufayli har bir bola hayotda o‘z o‘rnini topishi,
+              kelajakda jamiyat uchun foydali inson bo‘lishi va o‘z orzulariga
+              erishishi mumkin bo‘ladi. Bugun xayriya qilish haqida o‘ylab
+              ko‘ring. Sizning qo‘llab-quvvatlashingiz har bir bolaning
+              rivojlanishi, o‘rganishi va muvaffaqiyat qozonishi uchun qulay
+              muhit yaratishga xizmat qiladi. Keling, birgalikda yorqin kelajak
+              uchun mustahkam poydevor quraylik. Bizning tashabbusimizga
+              qo‘shilganingiz va jamiyatning kuchiga ishonganingiz uchun sizga
+              chuqur minnatdorchilik bildiramiz.
+          </p>
+
+          <div className="flex justify-center md:justify-start">
+            <Link href="/helpme" className="cursor-pointer">
+              <Button className="mt-4 sm:mt-6 px-4 sm:px-6 py-6 sm:py-4 text-sm sm:text-base border border-blue-500 text-blue-500 bg-white font-semibold rounded-lg hover:bg-blue-500 hover:text-white transition duration-300">
+                Ehsonga hissa qo‘shish
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+    </div>
+      <div className="mt-20 px-4 sm:px-6 md:px-10 mx-auto">
+        <div className="flex justify-between px-4 sm:px-6 md:px-10">
+          <h1 className="text-xl text-gray-800">
+            Kambag'al odamlar uchun xayriya qiling.
+          </h1>
+          <Link href={"/category"}>
+            <Button className=" border border-blue-500 text-blue-500 bg-white hover:bg-blue-500 hover:text-white py-3 px-6 rounded cursor-pointer flex items-center gap-2">
+              Barchasini ko'rish <MoveRight />
+            </Button>
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 p-6">
+        {applications.map((application) => (
+          <Card key={application.petition_id} className="overflow-hidden shadow-lg">
+            <Link href={`/news/${application.petition_id}`}>
+              <img
+               src={application.images[0]}
+                alt="item"
+                className="w-full h-48 object-cover cursor-pointer px-2 rounded"
+              />
+            </Link>
+            <CardContent className="p-4">
+              <h3 className="text-lg font-semibold mb-2 line-clamp-1">{application.full_name}</h3>
+              <p className="text-sm text-gray-600 line-clamp-2">{application.information}</p>
+              <div className="flex justify-center mt-4">
+                <Link href={`/news/${application.petition_id}`}>
+                  <Button className="border bg-white border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white">
+                    Ko'proq ko'rish →
+                  </Button>
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+      </div>
+      <h1 className="text-xl md:text-3xl mt-20  px-15">Oxirgi yangiliklar</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 p-6 px-15">
+        {news.map((newsItem) => (
+          <Card key={newsItem.id} className="overflow-hidden shadow-lg">
+            <Link href={`/news/${newsItem.id}`}>
+              <img
+                src={`${process.env.NEXT_PUBLIC_APP_API_ENDPOINT}/media/${newsItem.image}`}
+                alt="item"
+                className="w-full h-48 object-cover cursor-pointer px-2 rounded"
+              />
+            </Link>
+            <CardContent className="p-4">
+              <h3 className="text-lg font-semibold mb-2 line-clamp-1">{newsItem.title}</h3>
+              <p className="text-sm text-gray-600 line-clamp-2">{newsItem.description}</p>
+              <div className="flex justify-center mt-4">
+                <Link href={`/news/${newsItem.id}`}>
+                  <Button className="border bg-white border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white">
+                    Ko'proq ko'rish →
+                  </Button>
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
 }
 
-export default Homepage
+export default Homepage;

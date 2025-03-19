@@ -1,10 +1,9 @@
 export const navLink = [
   { id: 1, name: "Bosh sahifa", path: "/" },
   { id: 2, name: " Biz haqimizda", path: "/about" },
-  { id: 3, name: "Ehson qilish", path: "helpme" },
-  { id: 4, name: "Kategoriyalar", path: "/category" },
-  { id: 5, name: "Yangiliklar", path: "/news" },
-  { id: 6, name: "Ariza topshirish", path: "/application" },
+  { id: 3, name: "Kategoriyalar", path: "/category" },
+  { id: 4, name: "Yangiliklar", path: "/news" },
+  { id: 5, name: "Ariza topshirish", path: "/application" },
 ];
 
 export const footerImages = [
@@ -52,37 +51,27 @@ export const footerLinks = [
   { id: 11, name: "Coming Soon" },
   { id: 12, name: "Medical facilities" },
 ];
-export const donationCards = [
+ export const helpOptions = [
   {
-    image: "/help3.png",
-    title: "Old Education Needs For All.",
+    id: 1,
+    title: "Ko‘ngilli bo‘ling",
     description:
-      "Lorem Ipsum is simply dummy text of the industry’s since the unknown.",
-    name: "Adam",
+      "Siz o‘z vaqtingiz, mahoratingiz va bilimlaringiz bilan saxovatli ishlarga hissa qo‘shishingiz mumkin.",
+   image: "/Icon.png"
   },
   {
-    image: "/help3.png",
-    goal: "$3000",
-    rise: "$2500",
-    toGo: "$500",
-    title: "Old Education Needs For All",
+    id: 2,
+    title: "Ehson qilishga chaqirish",
     description:
-      "Lorem Ipsum is simply dummy text of the industry’s since the unknown.",
-    name: "Adam",
+      "Ehson qilish orqali muhtojlarga yordam berish va jamiyatda yaxshilik tarqatishga yordam bering.",
+    image: "/Icon2.png"
   },
   {
-    image: "/help3.png",
-    title: "Needs For Change The World.",
+    id: 3,
+    title: "Ehson yuborish",
     description:
-      "Lorem Ipsum is simply dummy text of the industry’s since the unknown.",
-    name: "Adam",
-  },
-  {
-    image: "/help3.png",
-    title: "Old Education Needs For All",
-    description:
-      "Lorem Ipsum is simply dummy text of the industry’s since the unknown.",
-    name: "Adam",
+      "Pul yoki boshqa moddiy yordam shakllarini muhtojlarga yetkazib, hayotlarini yaxshilashga hissa qo‘shing.",
+   image: "/Icon1.png"
   },
 ];
 

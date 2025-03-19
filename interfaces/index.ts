@@ -12,12 +12,7 @@ export interface CategoryTypes {
 	subcategories: SubCategoryTypes[]
 }
 
-export interface PaginationApplication {
-	count: number;
-	next: string;
-	previous: string;
-	results: ApplicationTypes[];
-}
+
 export interface ApplicationTypes {
 	id: number
 	petition_id: number
@@ -48,9 +43,14 @@ export interface NewsTypes {
   }
 
   export interface AboutUsTypes {
+	id: number;
+	image_main: string;
 	image: string;
 	title: string;
-	description: string;
+	description_thick: string;
+	description_thin: string;
+	title_2: string;
+	description_2: string;
   }
   export interface HelpTypes {
 	title: string;
