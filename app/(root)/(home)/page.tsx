@@ -7,13 +7,14 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { API_REQUEST } from "@/lib/apiRequest";
+
 import {
   ApplicationTypes,
   CategoryTypes,
   HomeTypes,
   NewsTypes,
 } from "@/interfaces";
+import { API_REQUEST } from '@/services'
 
 function Homepage() {
   const [categories, setCategories] = useState<CategoryTypes[]>([]);
@@ -22,7 +23,7 @@ function Homepage() {
   const [home, setHome] = useState<HomeTypes>();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
+  // const [petition,setPetition]=useState<
   // categories
   useEffect(() => {
     axios
@@ -70,6 +71,7 @@ function Homepage() {
 
     fetchHome();
   }, []);
+ 
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -120,9 +122,11 @@ function Homepage() {
           </div>
         </div>
         <div className="w-full max-w-xs md:max-w-md flex-1">
-          <img
+          <Image
             src="/5.png"
             alt="help"
+            width={200}
+            height={200}
             className="object-cover w-full h-auto rounded-full "
           />
         </div>
@@ -162,22 +166,28 @@ function Homepage() {
       <div className="max-w-8xl mx-auto p-4 sm:p-6 md:p-10 bg-[#F4F1FA] rounded-lg shadow-lg flex flex-col md:flex-row items-center justify-center gap-6 sm:gap-8">
       {/* Rasm qismi */}
       <div className="w-full flex flex-col items-center gap-3 sm:gap-4 mb-6 md:mb-10">
-        <img
+        <Image
           src="/1.png"
           alt="children"
+          width={200}
+          height={200}
           className="rounded w-full h-[200px] sm:h-[250px] md:h-[300px] object-cover"
         />
 
         <div className="flex gap-2 sm:gap-4 flex-wrap justify-center">
-          <img
+          <Image
             src="/2.png"
             alt="help"
+            width={200}
+            height={200}
             className="rounded-lg shadow-md w-[100%] sm:w-[290px] h-[180px] sm:h-[200px] object-cover"
           />
 
-          <img
+          <Image
             src="/3.png"
             alt="help"
+            width={200}
+            height={200}
             className="rounded-lg shadow-md w-[100%] sm:w-[290px] h-[180px] sm:h-[200px] object-cover"
           />
         </div>
@@ -250,7 +260,7 @@ function Homepage() {
         {applications.map((application) => (
           <Card key={application.petition_id} className="overflow-hidden shadow-lg">
             <Link href={`/news/${application.petition_id}`}>
-              <img
+              <Image
                src={application.images[0]}
                 alt="item"
                 className="w-full h-48 object-cover cursor-pointer px-2 rounded"
@@ -276,7 +286,7 @@ function Homepage() {
         {news.map((newsItem) => (
           <Card key={newsItem.id} className="overflow-hidden shadow-lg">
             <Link href={`/news/${newsItem.id}`}>
-              <img
+              <Image
                 src={`${process.env.NEXT_PUBLIC_APP_API_ENDPOINT}/media/${newsItem.image}`}
                 alt="item"
                 className="w-full h-48 object-cover cursor-pointer px-2 rounded"

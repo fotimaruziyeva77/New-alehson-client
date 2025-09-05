@@ -1,7 +1,7 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { API_REQUEST } from '@/lib/apiRequest'
+
 import axios from 'axios'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
@@ -14,6 +14,7 @@ import {
 	BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
 import { SubCategoryTypes } from '@/interfaces'
+import { API_REQUEST } from '@/services'
 
 function CategoryPage() {
 	const [subcategories, setSubCategories] = useState<SubCategoryTypes[]>([])

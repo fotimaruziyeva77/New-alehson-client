@@ -33,6 +33,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { regions } from "@/constants";
 import { toast } from "sonner";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 
 function ApplicationPage() {
   const [category, setCategory] = useState<string>("");
@@ -150,20 +151,32 @@ function ApplicationPage() {
 
   return (
     <div>
-      {/* <div className="w-full p-4 mt-25">
-        <div className="relative w-full h-60 md:h-80 lg:h-96">
-          <Image
-            src="/about.png"
-            alt="About Us Image"
-            className="w-full h-full object-cover"
-            layout="fill"
-          />
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-xl md:text-6xl lg:text-8xl font-bold text-center">
-            Ariza topshirish
-          </div>
+        <div
+        className="w-full h-[300px] md:h-[400px] bg-center bg-cover flex flex-col justify-center items-center"
+        style={{ backgroundImage: "url('/edit.png')" }}
+      >
+        <h1 className="text-white text-2xl md:text-4xl font-bold text-center">
+		  Ariza yuborish
+        </h1>
+        <div className="mt-4 md:mt-10">
+          <Breadcrumb>
+            <BreadcrumbList className="text-white  text-lg md:text-xl">
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/" className="hover:text-yellow-500">
+                  Bosh sahifa
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/about" className="hover:text-yellow-500">
+				Ariza yuborish
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
         </div>
-      </div> */}
-      <div className="flex justify-center items-center mt-20">
+      </div>
+      <div className="flex justify-center items-center mt-10">
         <div className="bg-blue-400 max-w-7xl p-10 rounded-lg w-full mt-10 mb-10">
           <h2 className="text-5xl text-white mb-4">
             Ariza topshiring va yordam oling.

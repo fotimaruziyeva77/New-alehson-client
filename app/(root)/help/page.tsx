@@ -9,48 +9,48 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 function HelpPage() {
-  const [help, setHelp] = useState<HelpTypes[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  useEffect(() => {
-    const fetchHome = async () => {
-      await axios
-        .get(API_REQUEST.helpsettings)
-        .then((res) => setHelp(res.data))
-        .catch((err) => console.log(err));
-      setLoading(false);
-    };
+  // const [help, setHelp] = useState<HelpTypes[]>([]);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState<string | null>(null);
+  // useEffect(() => {
+  //   const fetchHome = async () => {
+  //     await axios
+  //       .get(API_REQUEST.helpsettings)
+  //       .then((res) => setHelp(res.data))
+  //       .catch((err) => console.log(err));
+  //     setLoading(false);
+  //   };
 
-    fetchHome();
-  }, []);
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="lds-spinner">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
-    );
-  }
+  //   fetchHome();
+  // }, []);
+  // if (loading) {
+  //   return (
+  //     <div className="flex justify-center items-center h-screen">
+  //       <div className="lds-spinner">
+  //         <div></div>
+  //         <div></div>
+  //         <div></div>
+  //         <div></div>
+  //         <div></div>
+  //         <div></div>
+  //         <div></div>
+  //         <div></div>
+  //         <div></div>
+  //         <div></div>
+  //         <div></div>
+  //         <div></div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
-  if (error) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <p className="text-red-500">{error}</p>
-      </div>
-    );
-  }
+  // if (error) {
+  //   return (
+  //     <div className="flex justify-center items-center h-screen">
+  //       <p className="text-red-500">{error}</p>
+  //     </div>
+  //   );
+  // }
   return (
     <div className="mt-20 mb-20">
        <div

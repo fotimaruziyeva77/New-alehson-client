@@ -7,8 +7,8 @@ export interface SubCategoryTypes {
 
 export interface CategoryTypes {
 	id: number
-	name: string
-	image: string
+	image: string 
+  title:string
 	subcategories: SubCategoryTypes[]
 }
 
@@ -42,28 +42,24 @@ export interface NewsTypes {
 	slug: string;
   }
 
-  export interface AboutUsTypes {
-	id: number;
-	image_main: string;
-	image: string;
-	title: string;
-	description_thick: string;
-	description_thin: string;
-	title_2: string;
-	description_2: string;
-  }
+  export interface About {
+  id: number
+  main_image: string 
+  main_title: string
+  hero_title: string
+  description: string
+}
+
   export interface HelpTypes {
 	title: string;
 	description: string;
 	image: string;
   }
   export interface HomeTypes {
-	id: number;
 	title: string;
 	image: string;
-	image2: string;
-	image3: string;
-	image4: string;
 	titleAbaut: string;
 	description: string;
+	image_urls: string[];
+	images: string;
   }

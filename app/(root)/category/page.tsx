@@ -1,7 +1,6 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { API_REQUEST } from '@/lib/apiRequest'
 import axios from 'axios'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
@@ -14,6 +13,8 @@ import {
 	BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
 import { CategoryTypes } from '@/interfaces'
+import Image from 'next/image'
+import { API_REQUEST } from '@/services'
 
 function CategoryPage() {
 	const [categories, setCategories] = useState<CategoryTypes[]>([])
@@ -70,13 +71,15 @@ function CategoryPage() {
 				<div className='grid md:grid-cols-4 gap-6 p-6'>
 					{categories.map(category => (
 						<Card key={category.id} className='overflow-hidden shadow-lg'>
-							<img
+							<Image
 								src={category.image}
 								alt='category'
+								width={400}
+								height={300}
 								className='w-full h-48 object-cover'
 							/>
 							<CardContent className='p-4'>
-								<h3 className='text-lg font-semibold mb-2'>{category.name}</h3>
+								<h3 className='text-lg font-semibold mb-2'>{category.title}</h3>
 								<div className='flex items-center justify-center mt-10'>
 									<Button
 										variant='outline'
