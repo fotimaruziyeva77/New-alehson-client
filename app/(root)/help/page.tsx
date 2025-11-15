@@ -2,7 +2,7 @@
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { HelpTypes } from "@/interfaces";
-import { API_REQUEST } from "@/lib/apiRequest";
+// import { API_REQUEST } from "@/lib/apiRequest";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";

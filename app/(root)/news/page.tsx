@@ -16,6 +16,7 @@ import {
 	BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
 import { API_REQUEST } from '@/services'
+import Image from 'next/image'
 
 function NewsPage() {
 	const [news, setNews] = useState<NewsTypes[]>([])
@@ -104,7 +105,7 @@ function NewsPage() {
 					>
 						{/* News Image */}
 						<div className='w-full h-48 overflow-hidden'>
-							<img
+							<Image
 								src={`${process.env.NEXT_PUBLIC_APP_API_ENDPOINT}/media/${item.image}`}
 								alt={item.title}
 								className='w-full h-full object-cover'
