@@ -1,7 +1,7 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import { NewsTypes } from '@/interfaces'
-import { API_REQUEST } from '@/lib/apiRequest'
+// import { API_REQUEST } from '@/lib/apiRequest'
 import axios from 'axios'
 import { Eye } from 'lucide-react'
 import Link from 'next/link'
@@ -15,6 +15,7 @@ import {
 	BreadcrumbPage,
 	BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
+import { API_REQUEST } from '@/services'
 
 function NewsPage() {
 	const [news, setNews] = useState<NewsTypes[]>([])

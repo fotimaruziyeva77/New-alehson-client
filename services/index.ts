@@ -8,5 +8,6 @@ export const API_REQUEST = {
 	applications: `${baseUrl}/application/`,
 	homesettings: `${baseUrl}/home-settings/`,
 	aboutsettings: `${baseUrl}/about-settings/`,
+	google:`${baseUrl}/auth/google/`
 	
 }

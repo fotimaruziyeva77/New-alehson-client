@@ -1,107 +1,79 @@
-"use client";
-import {
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import type { About } from '@/interfaces'
-import { API_REQUEST } from '@/services'
-import axios from "axios";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import Image from 'next/image';
 
-function About() {
-  const [about, setAbout] = useState<About[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(API_REQUEST.about);
-        setAbout(res.data);
-      } catch (err) {
-        console.error("Xatolik yuz berdi:", err);
-      }
-    };
-    fetchData();
-  }, []);
-
+export default function AboutPage() {
   return (
     <div>
-      {about.map((about, index) => (
-        <div key={index}>
-         <div className="relative w-full h-[300px] md:h-[400px]">
-  <Image
-    src={about.main_image}
-    alt='Hello'
-    layout="fill"
-    objectFit="cover"
-    priority
-  />
-  <div className="absolute inset-0 flex flex-col justify-center items-center bg-black/50">
-    <h1 className="text-white text-2xl md:text-4xl font-bold text-center">
-      Biz haqimizda
-    </h1>
-    <div className="mt-4 md:mt-10">
-      <Breadcrumb>
-        <BreadcrumbList className="text-white text-lg md:text-xl">
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/" className="hover:text-yellow-500">
-              Bosh sahifa
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/about" className="hover:text-yellow-500">
-              Biz haqimizda
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
-    </div>
-  </div>
-</div>
-          <div className="w-full p-6 md:p-8">
-            <h1 className="text-center text-2xl md:text-4xl font-bold mb-8">
-             {about.main_title}
-            </h1>
-            <div className="flex flex-col md:flex-row items-center gap-2">
-            
-              <div className="w-full md:w-1/2">
-                <Image
-                  src={about.main_image}
-                  alt="Helping hands"
-                  width={800}
-                  height={400}
-                />
-              </div>
-              <div className="w-full md:w-1/2">
-                <h2 className="text-2xl md:text-3xl font-semibold mb-4">
-                 {about.main_title}
-                </h2>
-                <p className="text-gray-700 mb-6">
-                {about.description}
-                </p>
+      {/* Hero Section */}
+      <section className="py-16 bg-gradient-to-r from-blue-50 to-indigo-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="flex justify-center mb-8">
+            <Image
+              src="/ehson-no-text.png"
+              alt="ALEHSON Logo"
+              width={150}
+              height={150}
+              className="h-38 w-auto"
+            />
+          </div>
+          <h1 className="text-4xl font-bold text-gray-800 mb-6">Biz haqimizda</h1>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            ALEHSON — bu mehr va saxovat platformasi. Biz insonlarga yordam berish uchun
+            ularni birlashtiramiz.
+          </p>
+        </div>
+      </section>
 
-                <div className="mt-6 flex flex-col md:flex-row gap-4">
-                  <div className="bg-red-500 text-white p-4 md:p-6 rounded-lg w-full md:w-1/2 shadow-md">
-                    <h3 className="text-lg md:text-xl font-semibold mb-2">
-                      {about.hero_title}
-                    </h3>
-                    <p className="text-sm">
-                     {about.description}
-                    </p>
-                  </div>
-              
-                </div>
-              </div>
+      {/* Mission & Vision */}
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl font-bold text-gray-800 mb-6">Missiyamiz</h2>
+              <p className="text-gray-600 mb-4">
+                Bizning missiyamiz - har bir yordamga muhtoj insonning ehtiyojlarini
+                qondirish va ularga yordam berishni xohlovchi insonlar bilan
+                bog'lab berish.
+              </p>
+              <p className="text-gray-600">
+                ALEHSON platformasi orqali biz shaffof, ishonchli va samarali yordam
+                mexanizmini yaratishga intilamiz.
+              </p>
+            </div>
+            <div className="relative h-80 rounded-lg overflow-hidden">
+              <Image
+                src="/about-mission.jpg"
+                alt="Our Mission"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mt-16">
+            <div className="order-2 md:order-1 relative h-80 rounded-lg overflow-hidden">
+              <Image
+                src="/about-vision.jpg"
+                alt="Our Vision"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="order-1 md:order-2">
+              <h2 className="text-3xl font-bold text-gray-800 mb-6">Vizyonimiz</h2>
+              <p className="text-gray-600 mb-4">
+                Kelajakda ALEHSON butun mamlakat bo'ylab eng ishonchli va keng
+                qamrovli ehson platformasiga aylanishni maqsad qilgan.
+              </p>
+              <p className="text-gray-600">
+                Biz jamiyatdagi har bir a'zoning o'z hissasini qo'shishi mumkin
+                bo'lgan platforma yaratishni istaymiz.
+              </p>
             </div>
           </div>
         </div>
-      ))}
+      </section>
+
+     
     </div>
   );
 }
-
-export default About;
