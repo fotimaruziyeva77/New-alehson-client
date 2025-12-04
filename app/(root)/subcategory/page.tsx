@@ -13,11 +13,11 @@ import {
 	BreadcrumbList,
 	BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
-import { SubCategoryTypes } from '@/interfaces'
+import { Subcategory } from '@/interfaces'
 import { API_REQUEST } from '@/services'
 
 function CategoryPage() {
-	const [subcategories, setSubCategories] = useState<SubCategoryTypes[]>([])
+	const [subcategories, setSubCategories] = useState<Subcategory[]>([])
 	const router = useRouter()
 
 	useEffect(() => {
@@ -27,7 +27,7 @@ function CategoryPage() {
 			.catch(err => console.error('Xatolik:', err))
 	}, [])
 
-	const handleSubcategoryClick = (subcategory: SubCategoryTypes) => {
+	const handleSubcategoryClick = (subcategory: Subcategory) => {
 		router.push(`/applications?subcategoryId=${subcategory.id}`)
 	}
 
@@ -67,14 +67,9 @@ function CategoryPage() {
 				<div className='grid md:grid-cols-4 gap-6 p-6'>
 					{subcategories.map(subcategory => (
 						<Card key={subcategory.id} className='overflow-hidden shadow-lg'>
-							<img
-								src={`${process.env.NEXT_PUBLIC_APP_API_ENDPOINT}/media/${subcategory.image}`}
-								alt='subcategory'
-								className='w-full h-48 object-cover'
-							/>
 							<CardContent className='p-4'>
 								<h3 className='text-lg font-semibold mb-2'>
-									{subcategory.name}
+									{subcategory.title}
 								</h3>
 								<div className='flex items-center justify-center mt-10'>
 									<Button

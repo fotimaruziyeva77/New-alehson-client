@@ -2,13 +2,14 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { CategoryTypes, NewsTypes } from '@/interfaces'
-import { API_REQUEST } from '@/lib/apiRequest'
 import axios from 'axios'
 import { Facebook, Linkedin, MoveLeft, Twitter } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import DOMPurify from 'dompurify'
 import Link from 'next/link'
+import { API_REQUEST } from '@/services'
+import Image from 'next/image'
 
 function page() {
 	const [news, setNews] = useState<NewsTypes | null>(null)
@@ -45,7 +46,7 @@ function page() {
 				<div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
 					<div className='md:col-span-2'>
 						<Card>
-							<img
+							<Image
 								src={`${process.env.NEXT_PUBLIC_APP_API_ENDPOINT}/media/${news.image}`}
 								alt={news.title}
 								className=' rounded-t-xl px-2'
@@ -84,7 +85,7 @@ function page() {
 								<ul className='mt-2 space-y-2'>
 									{categories.map(category => (
 										<Link href={`/category/${category.id}`} key={category.id}>
-											<li>{category.name}</li>
+											<li>{category.title}</li>
 										</Link>
 									))}
 								</ul>

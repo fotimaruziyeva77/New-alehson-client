@@ -1,7 +1,7 @@
 const baseUrl = process.env.NEXT_PUBLIC_APP_API_ENDPOINT
 
 export const API_REQUEST = {
-	news: `${baseUrl}/news/`,
+	news: `${baseUrl}/blogs/`,
 	categories: `${baseUrl}/categories/`,
 	about:`${baseUrl}/about/`,
 	subcategories: `${baseUrl}/subcategories/`,

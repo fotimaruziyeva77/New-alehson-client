@@ -67,7 +67,8 @@ function CategoryPage() {
 						</Breadcrumb>
 					</div>
 				</div>
-
+		
+				
 				<div className='grid md:grid-cols-4 gap-6 p-6'>
 					{categories.map(category => (
 						<Card key={category.id} className='overflow-hidden shadow-lg'>

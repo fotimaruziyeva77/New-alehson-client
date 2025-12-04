@@ -5,10 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Search, Facebook, Twitter, Linkedin, Copy, Check, MoveLeft } from "lucide-react";
 import { ApplicationTypes, CategoryTypes } from "@/interfaces";
 import axios from "axios";
-import { API_REQUEST } from "@/lib/apiRequest";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Breadcrumb,BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { API_REQUEST } from '@/services'
+import Image from 'next/image'
 
 const BlogPage = () => {
   const [applications, setApplications] = useState<ApplicationTypes | null>(
@@ -118,7 +119,7 @@ const BlogPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="md:col-span-2">
             <Card>
-              <img
+              <Image
                 src={applications.images?.[0]}
                 alt="Smiling children"
                 className=" px-8 rounded-t-xl w-full md:w-full object-cover"
@@ -131,7 +132,7 @@ const BlogPage = () => {
                   {applications.images?.length > 0 && (
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
                       {applications.images.map((url) => (
-                        <img
+                        <Image
                           key={url.id}
                           src={url}
                           alt={`Image ${url.id + 1}`}

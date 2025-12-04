@@ -17,8 +17,8 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import axios from "axios";
-import { API_REQUEST } from "@/lib/apiRequest";
-import { CategoryTypes, SubCategoryTypes } from "@/interfaces";
+// import { API_REQUEST } from "@/lib/apiRequest";
+import { CategoryTypes, Subcategory,  } from "@/interfaces";
 import {
   Form,
   FormControl,
@@ -34,12 +34,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { regions } from "@/constants";
 import { toast } from "sonner";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { API_REQUEST } from '@/services'
 
 function ApplicationPage() {
   const [category, setCategory] = useState<string>("");
   const [subCategory, setSubCategory] = useState<string>("");
   const [categories, setCategories] = useState<CategoryTypes[]>([]);
-  const [subCategories, setSubCategories] = useState<SubCategoryTypes[]>([]);
+  const [subCategories, setSubCategories] = useState<Subcategory[]>([]);
   const [region, setRegion] = useState<string>("");
   const [district, setDistrict] = useState<string>("");
   const [districts, setDistricts] = useState(false);
@@ -418,7 +419,7 @@ function ApplicationPage() {
                                     value={`${item.id}`}
                                     key={item.id}
                                   >
-                                    {item.name}
+                                    {item.title}
                                   </SelectItem>
                                 ))}
                               </SelectContent>
@@ -447,14 +448,14 @@ function ApplicationPage() {
                               <SelectContent>
                                 {subCategories.map((item) => {
                                   if (
-                                    Number(Number(category) === item.category)
+                                    Number(Number(category) === item.categories)
                                   ) {
                                     return (
                                       <SelectItem
                                         value={`${item.id}`}
                                         key={item.id}
                                       >
-                                        {item.name}
+                                        {item.title}
                                       </SelectItem>
                                     );
                                   }
