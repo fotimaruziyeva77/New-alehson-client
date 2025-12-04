@@ -1,7 +1,11 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import { NewsTypes } from '@/interfaces'
+<<<<<<< HEAD
 
+=======
+// import { API_REQUEST } from '@/lib/apiRequest'
+>>>>>>> 086f6743b4c3128d341da9c25aed760a2ad2302a
 import axios from 'axios'
 import { Eye } from 'lucide-react'
 import Link from 'next/link'

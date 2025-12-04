@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/breadcrumb'
 import { Subcategory } from '@/interfaces'
 import { API_REQUEST } from '@/services'
+import Image from 'next/image'
 
 function CategoryPage() {
 	const [subcategories, setSubCategories] = useState<Subcategory[]>([])
@@ -67,6 +68,14 @@ function CategoryPage() {
 				<div className='grid md:grid-cols-4 gap-6 p-6'>
 					{subcategories.map(subcategory => (
 						<Card key={subcategory.id} className='overflow-hidden shadow-lg'>
+<<<<<<< HEAD
+=======
+							<Image
+								src={`${process.env.NEXT_PUBLIC_APP_API_ENDPOINT}/media/${subcategory.image}`}
+								alt='subcategory'
+								className='w-full h-48 object-cover'
+							/>
+>>>>>>> 086f6743b4c3128d341da9c25aed760a2ad2302a
 							<CardContent className='p-4'>
 								<h3 className='text-lg font-semibold mb-2'>
 									{subcategory.title}

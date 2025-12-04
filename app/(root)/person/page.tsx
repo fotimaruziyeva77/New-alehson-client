@@ -5,24 +5,25 @@ import { Button } from "@/components/ui/button";
 import { Search, Facebook, Twitter, Linkedin, Copy, Check } from "lucide-react";
 import { ApplicationTypes } from "@/interfaces";
 import axios from "axios";
-import { API_REQUEST } from "@/lib/apiRequest";
+// import { API_REQUEST } from "@/lib/apiRequest";
+import Image from 'next/image'
 
 const BlogPage = () => {
   const [copied, setCopied] = useState(false);
   const [applications, setApplications] = useState<ApplicationTypes[]>([]);
 
-  useEffect(() => {
-    const fetchApplicationById = async (petition_id:number) => {
-      try {
-        const response = await axios.get(`${API_REQUEST.applications}/${petition_id}/`);
-        console.log(response.data);
-      } catch (error) {
-        console.error("Xatolik yuz berdi:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchApplicationById = async (petition_id:number) => {
+  //     try {
+  //       const response = await axios.get(`${API_REQUEST.applications}/${petition_id}/`);
+  //       console.log(response.data);
+  //     } catch (error) {
+  //       console.error("Xatolik yuz berdi:", error);
+  //     }
+  //   };
   
-    fetchApplicationById(24); 
-  }, []);
+  //   fetchApplicationById(24); 
+  // }, []);
   
   const copyTextToClipboard = async () => {
     try {
@@ -42,7 +43,7 @@ const BlogPage = () => {
             applications.map((application) => (
               <div className="md:col-span-2" key={application.petition_id}>
               <Card>
-                <img
+                <Image
                   src={application.images}
                   alt="Smiling children"
                   className="w-full  rounded-t-xl"
@@ -60,12 +61,12 @@ const BlogPage = () => {
                     </blockquote>
                   </div>
                   <div className="flex space-x-2 mt-4">
-                    <img
+                    <Image
                       src={application.images}
                       alt="Child"
                       className="w-1/2 rounded-lg"
                     />
-                    <img
+                    <Image
                       src="/img-5.png"
                       alt="Happy child"
                       className="w-1/2 rounded-lg"
@@ -95,7 +96,7 @@ const BlogPage = () => {
                   <div className="bg-white text-black w-11/12 p-4 rounded-2xl shadow-lg">
                     <h1 className="text-lg text-right">Visa</h1>
                     <div className="flex flex-col gap-5">
-                      <img src="/cardchip.png" alt="Chip" className="w-10" />
+                      <Image src="/cardchip.png" alt="Chip" className="w-10" />
                       <span className="flex items-center justify-between w-full">
                         <p className="text-lg font-mono">1234 5678 9012 3456</p>
                         {copied ? (

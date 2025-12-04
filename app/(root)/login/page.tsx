@@ -1,4 +1,5 @@
 'use client'
+
 import { useState } from 'react'
 import Image from 'next/image'
 import { FaGoogle, FaFacebookF } from 'react-icons/fa'
@@ -109,4 +110,6 @@ export default function Login() {
 			</div>
 		</div>
 	)
+
+
 }

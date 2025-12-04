@@ -1,3 +1,4 @@
+
 "use client";
 import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,6 +11,7 @@ import Link from "next/link";
 import { Breadcrumb,BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { API_REQUEST } from '@/services'
 import Image from 'next/image'
+
 
 const BlogPage = () => {
   const [applications, setApplications] = useState<ApplicationTypes | null>(
@@ -53,7 +55,7 @@ const BlogPage = () => {
 
   const copyTextToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText(applications.plastic_card);
+      await navigator.clipboard.writeText(applications.);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
@@ -80,6 +82,7 @@ const BlogPage = () => {
       </div>
     );
   }
+
 
   if (error) {
     return (
@@ -155,56 +158,57 @@ const BlogPage = () => {
               </Link>
             </Card>
 
-          </div>
 
-          <aside className="space-y-6">
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex flex-col gap-4 items-center w-full">
-                  <div className="bg-white text-black w-11/12 p-4 rounded-2xl shadow-lg">
-                    <h1 className="text-lg text-right">Visa</h1>
-                    <div className="flex flex-col gap-5">
-                      <img src="/cardchip.png" alt="Chip" className="w-10" />
-                      <span className="flex items-center justify-between w-full">
-                        <p className="text-lg font-mono">
-                          {applications.plastic_card}
-                        </p>
-                        {copied ? (
+           </div>
+
+           <aside className="space-y-6">
+             <Card>
+               <CardContent className="p-4">
+                 <div className="flex flex-col gap-4 items-center w-full">
+                   <div className="bg-white text-black w-11/12 p-4 rounded-2xl shadow-lg">
+                     <h1 className="text-lg text-right">Visa</h1>
+                     <div className="flex flex-col gap-5">
+                       <Image src="/cardchip.png" alt="Chip" className="w-10" />
+                       <span className="flex items-center justify-between w-full">
+                         <p className="text-lg font-mono">
+                           {applications.plastic_card}
+                         </p>
+                         {copied ? (
                           <Check className="text-green-500 text-xl" />
                         ) : (
-                          <Copy
-                            onClick={copyTextToClipboard}
+                          <Copy                   onClick={copyTextToClipboard}
                             className="text-red-500 cursor-pointer text-xl"
                           />
                         )}
                       </span>
                       <h2 className="text-lg font-semibold">
-                        {applications.full_name}
-                      </h2>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </aside>
-        </div>
+                         {applications.full_name}
+                       </h2>
+                     </div>
+                   </div>
+                 </div>
+                 
+               </CardContent>
+             </Card>
+           </aside>
+         </div>
 
-        <div className="flex justify-between items-center mt-6">
-          <div className="space-x-2">
-            <Button variant="outline">
-              <Facebook size={18} />
-            </Button>
-            <Button variant="outline">
-              <Twitter size={18} />
-            </Button>
-            <Button variant="outline">
-              <Linkedin size={18} />
-            </Button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+         <div className="flex justify-between items-center mt-6">
+           <div className="space-x-2">
+             <Button variant="outline">
+               <Facebook size={18} />
+             </Button>
+             <Button variant="outline">
+               <Twitter size={18} />
+             </Button>
+             <Button variant="outline">
+               <Linkedin size={18} />
+             </Button>
+           </div>
+         </div>
+       </div>
+     </div>
+  ) 
 };
 
 export default BlogPage;
