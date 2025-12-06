@@ -60,19 +60,19 @@ function ApplicationInfo() {
 		setImageFiles((prevFiles) => [...prevFiles, ...files]);
 	};
 
-	const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		if (!e.target.files) return;
+	// const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	// 	if (!e.target.files) return;
 		
-		const file = e.target.files[0];
-		if (file && file.type.startsWith('video/')) {
-			setVideoFile(file);
-			setVideoUrl(URL.createObjectURL(file));
-		} else {
-			toast.error("Faqat video fayllarni yuklash mumkin", {
-				position: "top-center",
-			});
-		}
-	};
+	// 	const file = e.target.files[0];
+	// 	if (file && file.type.startsWith('video/')) {
+	// 		setVideoFile(file);
+	// 		setVideoUrl(URL.createObjectURL(file));
+	// 	} else {
+	// 		toast.error("Faqat video fayllarni yuklash mumkin", {
+	// 			position: "top-center",
+	// 		});
+	// 	}
+	// };
 
 	useEffect(() => {
 		const fetchCategories = async () => {
@@ -570,7 +570,7 @@ function ApplicationInfo() {
 														<Input
 															type="file"
 															accept="video/*"
-															onChange={handleVideoChange}
+															// onChange={handleVideoChange}
 															className="absolute inset-0 opacity-0 cursor-pointer"
 														/>
 													</Button>
