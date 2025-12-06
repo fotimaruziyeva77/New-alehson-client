@@ -30,7 +30,7 @@ export default function Profile() {
 
 				{/* APPLICATION FORM RIGHT */}
 				 <div className="md:col-span-2">
-          <ApplicationInfo user={user} />
+          <ApplicationInfo  />
         </div>
 			</div>
 		</div>

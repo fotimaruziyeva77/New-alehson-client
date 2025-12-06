@@ -1,7 +1,7 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
+// import { Button } from '@/components/ui/button'
+// import { Card, CardContent } from '@/components/ui/card'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -12,12 +12,13 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
-import { Subcategory } from '@/interfaces'
+
 import { API_REQUEST } from '@/services'
 import Image from 'next/image'
+import { Subcategory } from '@/interfaces'
 
 function CategoryPage() {
-  const [subcategories, setSubCategories] = useState<Subcategory[]>([])
+  const [subcategories, setSubCategories] = useState<Subcategory>()
   const router = useRouter()
 
   useEffect(() => {
@@ -67,11 +68,11 @@ function CategoryPage() {
         </div>
 
         {/* Subcategory grid */}
-        <div className='grid md:grid-cols-4 gap-6 p-6'>
+        {/* <div className='grid md:grid-cols-4 gap-6 p-6'>
           {subcategories.map(subcategory => (
             <Card key={subcategory.id} className='overflow-hidden shadow-lg'>
               <Image
-                src={`${process.env.NEXT_PUBLIC_APP_API_ENDPOINT}/media/${subcategory.image}`}
+                src={`${process.env.NEXT_PUBLIC_APP_API_ENDPOINT}/media/${subcategory.}`}
                 alt={subcategory.title}
                 width={300}
                 height={300}
@@ -93,7 +94,7 @@ function CategoryPage() {
               </CardContent>
             </Card>
           ))}
-        </div>
+        </div> */}
       </div>
     </div>
   )

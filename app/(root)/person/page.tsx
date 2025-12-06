@@ -3,14 +3,15 @@ import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Search, Facebook, Twitter, Linkedin, Copy, Check } from "lucide-react";
-import { ApplicationTypes } from "@/interfaces";
+
 import axios from "axios";
 // import { API_REQUEST } from "@/lib/apiRequest";
 import Image from 'next/image'
+import { Application } from '@/interfaces'
 
 const BlogPage = () => {
   const [copied, setCopied] = useState(false);
-  const [applications, setApplications] = useState<ApplicationTypes[]>([]);
+  const [applications, setApplications] = useState<Application[]>([]);
 
   // useEffect(() => {
   //   const fetchApplicationById = async (petition_id:number) => {
@@ -96,7 +97,7 @@ const BlogPage = () => {
                   <div className="bg-white text-black w-11/12 p-4 rounded-2xl shadow-lg">
                     <h1 className="text-lg text-right">Visa</h1>
                     <div className="flex flex-col gap-5">
-                      <Image src="/cardchip.png" alt="Chip" className="w-10" />
+                      <Image src="/cardchip.png" alt="Chip" className="w-10"  width={300} height={100}/>
                       <span className="flex items-center justify-between w-full">
                         <p className="text-lg font-mono">1234 5678 9012 3456</p>
                         {copied ? (
