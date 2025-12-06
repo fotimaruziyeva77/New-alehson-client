@@ -41,19 +41,19 @@ const BlogPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {
             applications.map((application) => (
-              <div className="md:col-span-2" key={application.petition_id}>
+              <div className="md:col-span-2" key={application.id}>
               <Card>
-                <Image
-                  src={application.images}
+                {/* <Image
+                  src={application.images || '/ima'}
                   alt="Smiling children"
                   className="w-full  rounded-t-xl"
-                />
+                /> */}
                 <CardContent className="p-6">
                   <h2 className="text-2xl font-bold">
                     {application.full_name}
                   </h2>
                   <p className="text-gray-600 mt-4">
-                  {application.information}
+                  {/* {application.information} */}
                   </p>
                   <div className="bg-gray-100 p-4 mt-4 rounded-lg">
                     <blockquote className="text-green-700 font-semibold">
@@ -61,11 +61,11 @@ const BlogPage = () => {
                     </blockquote>
                   </div>
                   <div className="flex space-x-2 mt-4">
-                    <Image
+                    {/* <Image
                       src={application.images}
                       alt="Child"
                       className="w-1/2 rounded-lg"
-                    />
+                    /> */}
                     <Image
                       src="/img-5.png"
                       alt="Happy child"

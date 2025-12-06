@@ -1,33 +1,33 @@
 export interface Subcategory {
-  id: number;
-  categories: number[];
+   id: number;
   title: string;
   slug: string;
 }
 
 export interface CategoryTypes {
-	id: number
-	image: string 
-  title:string
-	subcategories: Subcategory[]
+id: number;
+  image: string;
+  image_url: string;
+  title: string;
+  subcategories: Subcategory[];
 }
 
 
-export interface ApplicationTypes {
+export interface Application {
   id: number;
-  images: any[];
+  slug: string;
   full_name: string;
   phone_number: string;
   birth_date: string;
   passport_number: string;
   region: string;
   location: string;
+  category_title: string;
+  subcategory_title: string;
   description: string;
-  slug: string;
   status: string;
   denied_reason: string;
-  category: number;
-  subcategory: number;
+  images: any[];
 }
 export interface NewsTypes {
 	id: number;

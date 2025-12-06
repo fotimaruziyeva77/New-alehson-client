@@ -3,7 +3,7 @@ export const navLink = [
   { id: 2, name: " Biz haqimizda", path: "/about" },
   { id: 3, name: "Kategoriyalar", path: "/category" },
   { id: 4, name: "Yangiliklar", path: "/news" },
-  { id: 5, name: "Ariza topshirish", path: "/application" },
+  { id: 5, name: "Aloqa", path: "/contact" },
 ];
 
 export const footerImages = [

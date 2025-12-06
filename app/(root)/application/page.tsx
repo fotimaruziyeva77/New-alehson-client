@@ -1,671 +1,498 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
+'use client'
+
+import React, { useState, useEffect } from 'react'
+import { Input } from '@/components/ui/input'
+import { Card, CardContent, CardFooter } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import axios from "axios";
-<<<<<<< HEAD
-// import { API_REQUEST } from "@/lib/apiRequest";
-import { CategoryTypes, Subcategory,  } from "@/interfaces";
-=======
-import { CategoryTypes, SubCategoryTypes } from "@/interfaces";
->>>>>>> 086f6743b4c3128d341da9c25aed760a2ad2302a
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { regions } from "@/constants";
-import { toast } from "sonner";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from '@/components/ui/select'
+import { Badge } from '@/components/ui/badge'
+import { Skeleton } from '@/components/ui/skeleton'
+import { Search, Filter, Eye, Calendar, Phone, MapPin } from 'lucide-react'
+import axios from 'axios'
 import { API_REQUEST } from '@/services'
-<<<<<<< HEAD
-=======
-import { Card, CardContent } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Video, Upload, ImageIcon, X } from "lucide-react";
+import Image from 'next/image'
+import { Application } from '@/interfaces'
 
-// Define API endpoints (replace with your actual API endpoints)
->>>>>>> 086f6743b4c3128d341da9c25aed760a2ad2302a
 
-function ApplicationPage() {
-  const [category, setCategory] = useState<string>("");
-  const [subCategory, setSubCategory] = useState<string>("");
-  const [categories, setCategories] = useState<CategoryTypes[]>([]);
-  const [subCategories, setSubCategories] = useState<Subcategory[]>([]);
-  const [region, setRegion] = useState<string>("");
-  const [district, setDistrict] = useState<string>("");
-  const [districts, setDistricts] = useState(false);
-  const [imageFiles, setImageFiles] = useState<File[]>([]);
-  const [imageUrls, setImageUrls] = useState<string[]>([]);
-  const [videoFile, setVideoFile] = useState<File | null>(null);
-  const [videoUrl, setVideoUrl] = useState<string>("");
-  const [uploadType, setUploadType] = useState<"image" | "video">("image");
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-    
-    const files = Array.from(e.target.files) as File[];
-    const urls = files.map((file) => URL.createObjectURL(file));
-    setImageUrls((prevUrls) => [...prevUrls, ...urls]);
-    setImageFiles((prevFiles) => [...prevFiles, ...files]);
-  };
-
-  const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-    
-    const file = e.target.files[0];
-    if (file && file.type.startsWith('video/')) {
-      setVideoFile(file);
-      setVideoUrl(URL.createObjectURL(file));
-    } else {
-      toast.error("Faqat video fayllarni yuklash mumkin", {
-        position: "top-center",
-      });
-    }
-  };
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const res = await axios.get(API_REQUEST.categories);
-        setCategories(res.data);
-      } catch (err) {
-        console.log(err);
-        // For demo purposes, set mock data if API fails
-        setCategories([]);
-      }
-    };
-
-    const fetchSubCategories = async () => {
-      try {
-        const res = await axios.get(API_REQUEST.subcategories);
-        setSubCategories(res.data);
-      } catch (err) {
-        console.log(err);
-        // For demo purposes, set mock data if API fails
-        setSubCategories([
-          {
-            id: 1, name: "1-guruh", category: 1,
-            image: ''
-          },
-          {
-            id: 2, name: "2-guruh", category: 1,
-            image: ''
-          },
-          {
-            id: 3, name: "3-guruh", category: 1,
-            image: ''
-          },
-          { id: 4, name: "0-1 yosh", category: 2, image: '' },
-          { id: 5, name: "1-3 yosh", category: 2, image: '' },
-          { id: 6, name: "3-7 yosh", category: 2, image: '' },
-          { id: 7, name: "60-70 yosh", category: 3, image: '' },
-          { id: 8, name: "70-80 yosh", category: 3 , image: ''},
-          {
-            id: 9, name: "80+ yosh", category: 3,
-            image: ''
-          },
-          { id: 10, name: "Dasturlash", category: 4 , image: ''},
-          { id: 11, name: "Chek tili", category: 4, image: '' },
-          { id: 12, name: "Matematika", category: 4, image: '' },
-          { id: 13, name: "Jarrohlik", category: 5, image: '' },
-          { id: 14, name: "Terapiya", category: 5, image: '' },
-          { id: 15, name: "Stomatologiya", category: 5, image: '' },
-        ]);
-      }
-    };
-
-    fetchCategories();
-    fetchSubCategories();
-  }, []);
-
-  const formSchema = z.object({
-    fullName: z.string().min(2, "Ism familiya kamida 2 ta belgidan iborat bo'lishi kerak").max(50),
-    phoneNumber: z.string().min(9, "Telefon raqami noto'g'ri").max(15, "Telefon raqami juda uzun"),
-    information: z.string().min(25, "Ma'lumot kamida 25 ta belgidan iborat bo'lishi kerak").max(500),
-    plasticCard: z.string().min(16, "Karta raqami 16 ta raqamdan iborat bo'lishi kerak").max(16),
-    region1: z.string().min(1, "Viloyatni tanlash shart"),
-    region2: z.string().min(1, "Tumanni tanlash shart"),
-    region3: z.string().min(10, "Manzil kamida 10 ta belgidan iborat bo'lishi kerak").max(150),
-    category: z.string().min(1, "Kategoriyani tanlash shart"),
-    subCategory: z.string().min(1, "Pastki kategoriyani tanlash shart"),
-    passportInfo: z.string().min(9, "Passport ma'lumoti 9 ta belgidan iborat bo'lishi kerak").max(9),
-    birthday: z.string().min(1, "Tug'ilgan sana kiritilishi shart"),
-  });
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      fullName: "",
-      phoneNumber: "",
-      information: "",
-      plasticCard: "",
-      region1: "",
-      region2: "",
-      region3: "",
-      category: "",
-      subCategory: "",
-      passportInfo: "",
-      birthday: "",
-    },
-  });
-
-  useEffect(() => {
-    const selectedRegion = regions.find((obj) => obj.title === region);
-    setDistricts(!!selectedRegion);
-    if (!selectedRegion) {
-      setDistrict("");
-      form.setValue("region2", "");
-    }
-  }, [region, form]);
-
-  const getDistrictOptions = () => {
-    const selectedRegion = regions.find((obj) => obj.title === region);
-    if (!selectedRegion) return [];
-
-    return selectedRegion.items.map((district: string, index: number) => (
-      <SelectItem value={district} key={index}>
-        {district}
-      </SelectItem>
-    ));
-  };
-
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    const formData = new FormData();
-    formData.append("full_name", values.fullName);
-    formData.append("phone_number", values.phoneNumber);
-    formData.append("birthday", values.birthday);
-    formData.append("information", values.information);
-    formData.append("plastic_card", values.plasticCard);
-    formData.append("region", `${region}, ${district}, ${values.region3}`);
-    formData.append("category", category);
-    formData.append("subCategory", subCategory);
-    formData.append("passport_number", values.passportInfo);
-    
-    imageFiles.forEach((file) => {
-      formData.append(`image_urls`, file);
-    });
-    
-    if (videoFile) {
-      formData.append("video", videoFile);
-    }
-
-    try {
-      await axios.post(API_REQUEST.applications, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      
-      toast.success("Arizangiz muvaffaqiyatli yuborildi!", {
-        position: "top-center",
-      });
-      
-      // Reset form after successful submission
-      form.reset();
-      setCategory("");
-      setSubCategory("");
-      setRegion("");
-      setDistrict("");
-      setImageFiles([]);
-      setImageUrls([]);
-      setVideoFile(null);
-      setVideoUrl("");
-    } catch (error) {
-      console.error("Xatolik yuz berdi:", error);
-      toast.error("Ariza yuborishda xatolik yuz berdi. Iltimos, qayta urunib ko'ring.", {
-        position: "top-center",
-      });
-    }
-  }
-
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
-    
-      
-      <div className="container mx-auto px-4 pb-4">
-        <div className="max-w-7xl mx-auto">
-          <Card className="border-0 shadow-lg overflow-hidden">
-            <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-6 text-white">
-              <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center">
-                Ariza topshiring va yordam oling
-              </h2>
-              <p className="text-center opacity-90">
-                Shaxsiy ma'lumotlaringizni kiriting
-              </p>
-            </div>
-            
-            <CardContent className="p-6">
-              <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                  className="space-y-6"
-                >
-                  <div className="flex flex-col gap-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <FormField
-                        control={form.control}
-                        name="fullName"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-sm font-medium">
-                              Ism Familiya:
-                            </FormLabel>
-                            <FormControl>
-                              <Input
-                                className="text-sm"
-                                placeholder="Ism Familiyangiz"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage className="text-red-500 text-xs" />
-                          </FormItem>
-                        )}
-                      />
-                      
-                      <FormField
-                        control={form.control}
-                        name="phoneNumber"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-sm font-medium">
-                              Telefon raqamingiz:
-                            </FormLabel>
-                            <FormControl>
-                              <Input
-                                className="text-sm"
-                                placeholder="+998 XX XXX XX XX"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage className="text-red-500 text-xs" />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <FormField
-                        control={form.control}
-                        name="birthday"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-sm font-medium">
-                              Tug'ilgan sana:
-                            </FormLabel>
-                            <FormControl>
-                              <Input
-                                type="date"
-                                className="w-full"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage className="text-red-500 text-xs" />
-                          </FormItem>
-                        )}
-                      />
-                      
-                      <FormField
-                        control={form.control}
-                        name="passportInfo"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-sm font-medium">
-                              Passport seriya va raqam:
-                            </FormLabel>
-                            <FormControl>
-                              <Input
-                                className="text-sm"
-                                placeholder="AA1234567"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage className="text-red-500 text-xs" />
-                          </FormItem>
-                        )}
-                      />
-                      
-                      <FormField
-                        control={form.control}
-                        name="plasticCard"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-sm font-medium">
-                              Karta raqamingiz:
-                            </FormLabel>
-                            <FormControl>
-                              <Input
-                                className="text-sm"
-                                placeholder="8600 1234 5678 9012"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage className="text-red-500 text-xs" />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <FormField
-                        control={form.control}
-                        name="region1"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-sm font-medium">
-                              Viloyat:
-                            </FormLabel>
-                            <FormControl>
-                              <Select
-                                onValueChange={(value) => {
-                                  setRegion(value);
-                                  field.onChange(value);
-                                }}
-                                value={region}
-                              >
-                                <SelectTrigger className="w-full">
-                                  <SelectValue placeholder="Viloyatni tanlang" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  {regions.map((item) => (
-                                    <SelectItem value={item.title} key={item.id}>
-                                      {item.title}
-                                    </SelectItem>
-                                  ))}
-                                </SelectContent>
-                              </Select>
-                            </FormControl>
-                            <FormMessage className="text-red-500 text-xs" />
-                          </FormItem>
-                        )}
-                      />
-                      
-                      <FormField
-                        control={form.control}
-                        name="region2"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-sm font-medium">
-                              Tuman:
-                            </FormLabel>
-                            <FormControl>
-                              <Select
-                                onValueChange={(value) => {
-                                  setDistrict(value);
-                                  field.onChange(value);
-                                }}
-                                value={district}
-                                disabled={!region}
-                              >
-                                <SelectTrigger className="w-full">
-                                  <SelectValue placeholder="Tumanni tanlang" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  {getDistrictOptions()}
-                                </SelectContent>
-                              </Select>
-                            </FormControl>
-                            <FormMessage className="text-red-500 text-xs" />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    
-                    <FormField
-                      control={form.control}
-                      name="region3"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-sm font-medium">
-                            To'liq manzilingiz:
-                          </FormLabel>
-                          <FormControl>
-                            <Input
-                              className="text-sm"
-                              placeholder="Ko'cha, uy, xonadon raqami"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage className="text-red-500 text-xs" />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <FormField
-                      control={form.control}
-                      name="category"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-white text-sm font-medium">
-                            Kategoriya:
-                          </FormLabel>
-                          <FormControl>
-                            <Select
-                              {...field}
-                              onValueChange={(value) => setCategory(value)}
-                            >
-                              <SelectTrigger className="w-full bg-white">
-                                <SelectValue className="text-black" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                {categories.map((item) => (
-                                  <SelectItem
-                                    value={`${item.id}`}
-                                    key={item.id}
-                                  >
-                                    {item.title}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                          </FormControl>
-
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                  <div>
-                    <FormField
-                      control={form.control}
-                      name="subCategory"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-white text-sm font-medium">
-                            Qism kategoriya:
-                          </FormLabel>
-                          <FormControl>
-                            <Select {...field}>
-                              <SelectTrigger className="w-full bg-white">
-                                <SelectValue className="text-black" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                {subCategories.map((item) => {
-                                  if (
-                                    Number(Number(category) === item.categories)
-                                  ) {
-                                    return (
-
-                                      <SelectItem
-                                        value={item.id.toString()}
-                                        key={item.id}
-                                      >
-                                        {item.title}
-                                      </SelectItem>
-                                    ))}
-                                </SelectContent>
-                              </Select>
-                            </FormControl>
-                            <FormMessage className="text-red-500 text-xs" />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    
-                    <FormField
-                      control={form.control}
-                      name="information"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-sm font-medium">
-                            O'zingiz haqingizda ma'lumot bering:
-                          </FormLabel>
-                          <FormControl>
-                            <Textarea
-                              className="min-h-[120px] resize-none"
-                              placeholder="Yordam so'ragan sababingiz, hozirgi ahvolingiz va ehtiyojlaringiz haqida batafsil ma'lumot bering..."
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage className="text-red-500 text-xs" />
-                        </FormItem>
-                      )}
-                    />
-                    
-                    <div className="flex flex-col gap-2">
-                      <Label className="mb-2 text-sm font-medium">Media kontent (ixtiyoriy)</Label>
-                      
-                      <Tabs defaultValue="image" className="w-full" onValueChange={(value) => setUploadType(value as "image" | "video")}>
-                        <TabsList className="grid w-full grid-cols-2">
-                          <TabsTrigger value="image" className="flex items-center gap-2">
-                            <ImageIcon size={16} />
-                            Rasm
-                          </TabsTrigger>
-                          <TabsTrigger value="video" className="flex items-center gap-2">
-                            <Video size={16} />
-                            Video
-                          </TabsTrigger>
-                        </TabsList>
-                        
-                        <TabsContent value="image" className="space-y-4 mt-4">
-                          <Button 
-                            type="button"
-                            variant="outline"
-                            className="w-full md:w-auto border-blue-500 text-blue-500 hover:bg-blue-50 relative overflow-hidden"
-                          >
-                            <Upload size={16} className="mr-2" />
-                            <span>Rasmlarni yuklash</span>
-                            <Input
-                              type="file"
-                              multiple
-                              accept="image/*"
-                              onChange={handleImageChange}
-                              className="absolute inset-0 opacity-0 cursor-pointer"
-                            />
-                          </Button>
-                          
-                          {imageUrls.length > 0 && (
-                            <div className="mt-4">
-                              <p className="text-sm mb-2">Yuklangan rasmlar:</p>
-                              <div className="flex items-center gap-4 flex-wrap">
-                                {imageUrls.map((item, idx) => (
-                                  <div key={idx} className="relative group">
-                                    <div className="w-24 h-24 relative rounded-md overflow-hidden border">
-                                      <Image
-                                        className="object-cover"
-                                        src={item}
-                                        alt={`Uploaded file ${idx}`}
-                                        fill
-                                        sizes="96px"
-                                      />
-                                    </div>
-                                    <button
-                                      type="button"
-                                      className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
-                                      onClick={() => {
-                                        setImageUrls(imageUrls.filter((_, i) => i !== idx));
-                                        setImageFiles(imageFiles.filter((_, i) => i !== idx));
-                                      }}
-                                    >
-                                      ×
-                                    </button>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                        </TabsContent>
-                        
-                        <TabsContent value="video" className="space-y-4 mt-4">
-                          <Button 
-                            type="button"
-                            variant="outline"
-                            className="w-full md:w-auto border-blue-500 text-blue-500 hover:bg-blue-50 relative overflow-hidden"
-                          >
-                            <Upload size={16} className="mr-2" />
-                            <span>Video yuklash</span>
-                            <Input
-                              type="file"
-                              accept="video/*"
-                              onChange={handleVideoChange}
-                              className="absolute inset-0 opacity-0 cursor-pointer"
-                            />
-                          </Button>
-                          
-                          {videoUrl && (
-                            <div className="mt-4">
-                              <p className="text-sm mb-2">Yuklangan video:</p>
-                              <div className="relative group">
-                                <div className="aspect-video max-w-md mx-auto bg-black rounded-md overflow-hidden">
-                                  <video 
-                                    src={videoUrl} 
-                                    controls 
-                                    className="w-full h-full"
-                                  />
-                                </div>
-                                <button
-                                  type="button"
-                                  className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
-                                  onClick={() => {
-                                    setVideoFile(null);
-                                    setVideoUrl("");
-                                  }}
-                                >
-                                  ×
-                                </button>
-                              </div>
-                            </div>
-                          )}
-                        </TabsContent>
-                      </Tabs>
-                    </div>
-                  </div>
-                  
-                  <Button 
-                    type="submit" 
-                    className="w-full md:w-auto border border-blue-500 bg-blue-500 text-white hover:bg-blue-600 hover:border-blue-600 px-10 py-3 cursor-pointer text-lg font-medium transition-colors"
-                    disabled={form.formState.isSubmitting}
-                  >
-                    {form.formState.isSubmitting ? "Yuborilmoqda..." : "Arizani yuborish"}
-                  </Button>
-                </form>
-              </Form>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    </div>
-  );
+// Types
+interface CategoryType {
+	id: number
+	name: string
+	subcategories: SubcategoryType[]
 }
 
-export default ApplicationPage;
+interface SubcategoryType {
+	id: number
+	name: string
+	category: number
+}
+
+export default function ApplicationPage() {
+	const [categories, setCategories] = useState<CategoryType[]>([])
+	const [applications, setApplications] = useState<Application[]>([])
+	const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+	const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(
+		null
+	)
+	const [searchQuery, setSearchQuery] = useState('')
+	const [filteredApps, setFilteredApps] = useState<Application[]>([])
+	const [loading, setLoading] = useState(true)
+
+	// Ma'lumotlarni API'dan olish
+	useEffect(() => {
+		const fetchData = async () => {
+			setLoading(true)
+			try {
+				// Kategoriyalarni olish
+				const categoriesResponse = await axios.get(API_REQUEST.categories)
+				const categoriesData = categoriesResponse.data
+				setCategories(categoriesData)
+
+				// Applicationlarni olish
+				const appsResponse = await axios.get(API_REQUEST.applications)
+				const appsData = appsResponse.data
+				setApplications(appsData)
+				setFilteredApps(appsData)
+			} catch (error) {
+				console.error('Error fetching data:', error)
+			} finally {
+				setLoading(false)
+			}
+		}
+
+		fetchData()
+	}, [])
+
+	// Filtirlash logikasi
+	useEffect(() => {
+		let filtered = applications
+
+		if (selectedCategory) {
+			filtered = filtered.filter(app => app.category_title === selectedCategory)
+		}
+
+		if (selectedSubcategory) {
+			filtered = filtered.filter(
+				app => app.subcategory_title === selectedSubcategory
+			)
+		}
+
+		if (searchQuery) {
+			filtered = filtered.filter(
+				app =>
+					app.full_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+					(app.description &&
+						app.description
+							.toLowerCase()
+							.includes(searchQuery.toLowerCase())) ||
+					app.passport_number.toLowerCase().includes(searchQuery.toLowerCase())
+			)
+		}
+
+		setFilteredApps(filtered)
+	}, [selectedCategory, selectedSubcategory, searchQuery, applications])
+
+	// Tanlangan kategoriyaga tegishli subkategoriyalar
+	const currentSubcategories = selectedCategory
+		? categories.find(cat => cat.name === selectedCategory)
+				?.subcategories || []
+		: []
+
+	// Status ranglari
+	const getStatusColor = (status: string) => {
+		switch (status?.toLowerCase()) {
+			case 'active':
+			case 'approved':
+				return 'bg-green-500'
+			case 'pending':
+			case 'in_review':
+				return 'bg-yellow-500'
+			case 'completed':
+			case 'finished':
+				return 'bg-blue-500'
+			case 'denied':
+			case 'rejected':
+				return 'bg-red-500'
+			default:
+				return 'bg-gray-500'
+		}
+	}
+
+	const getStatusText = (status: string) => {
+		switch (status?.toLowerCase()) {
+			case 'active':
+				return 'Faol'
+			case 'pending':
+				return "Ko'rib chiqilmoqda"
+			case 'approved':
+				return 'Tasdiqlangan'
+			case 'denied':
+				return 'Rad etilgan'
+			case 'completed':
+				return 'Yakunlangan'
+			default:
+				return status
+		}
+	}
+
+	const resetFilters = () => {
+		setSelectedCategory(null)
+		setSelectedSubcategory(null)
+		setSearchQuery('')
+	}
+
+	// Format date
+	const formatDate = (dateString: string) => {
+		const date = new Date(dateString)
+		return date.toLocaleDateString('uz-UZ', {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric',
+		})
+	}
+
+	// Kategoriya nomini topish
+	const getCategoryName = (categoryId: number) => {
+		const category = categories.find(cat => cat.id === categoryId)
+		return category?.name || `Category ${categoryId}`
+	}
+
+	// Subkategoriya nomini topish
+	// const getSubcategoryName = (subcategoryId: number) => {
+	// 	for (const category of categories) {
+	// 		const subcategory = category.subcategories.find(
+	// 			sub => sub.name === subcategoryId
+	// 		)
+	// 		if (subcategory) return subcategory.name
+	// 	}
+	// 	return `Subcategory ${subcategoryId}`
+	// }
+
+	if (loading) {
+		return (
+			<div className='container mx-auto p-4 md:p-6'>
+				<div className='grid grid-cols-1 lg:grid-cols-4 gap-6'>
+					{/* Filter skeleton */}
+					<div className='lg:col-span-1 space-y-4'>
+						<Skeleton className='h-10 w-full' />
+						<Skeleton className='h-10 w-full' />
+						<Skeleton className='h-10 w-full' />
+					</div>
+					{/* Content skeleton */}
+					<div className='lg:col-span-3'>
+						<Skeleton className='h-12 w-full mb-6' />
+						<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+							{[1, 2, 3, 4, 5, 6].map(i => (
+								<Skeleton key={i} className='h-64 rounded-xl' />
+							))}
+						</div>
+					</div>
+				</div>
+			</div>
+		)
+	}
+
+	return (
+		<div className='min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-6'>
+			<div className='container mx-auto'>
+				<div className='mb-8'>
+					<h1 className='text-3xl md:text-4xl font-bold text-gray-800 mb-2'>
+						Ariza Ro'yxati
+					</h1>
+					<p className='text-gray-600'>
+						Barcha arizalarni filtrlash va ko'rish
+					</p>
+				</div>
+
+				<div className='grid grid-cols-1 lg:grid-cols-4 gap-6'>
+					{/* Chap sidebar - Filtrlar */}
+					<div className='lg:col-span-1'>
+						<Card className='sticky top-6 shadow-lg border-0'>
+							<CardContent className='p-6'>
+								<div className='flex items-center justify-between mb-6'>
+									<h2 className='text-xl font-semibold flex items-center gap-2'>
+										<Filter className='w-5 h-5' />
+										Filtrlar
+									</h2>
+									<Button
+										variant='outline'
+										size='sm'
+										onClick={resetFilters}
+										className='text-xs'
+									>
+										Barchasini tozalash
+									</Button>
+								</div>
+
+								<div className='space-y-6'>
+									{/* Kategoriya filtri */}
+									<div>
+										<label className='block text-sm font-medium text-gray-700 mb-2'>
+											Kategoriya
+										</label>
+										<Select
+											value={selectedCategory || ''}
+											onValueChange={value => {
+												setSelectedCategory(value)
+												setSelectedSubcategory(null)
+											}}
+										>
+											<SelectTrigger className='w-full'>
+												<SelectValue placeholder='Kategoriya tanlang' />
+											</SelectTrigger>
+											<SelectContent>
+												{categories.map(cat => (
+													<SelectItem
+														key={cat.id}
+														value={cat.name}
+														className='flex items-center justify-between'
+													>
+														<span>{cat.name}</span>
+														<Badge variant='secondary' className='ml-2'>
+															{
+																applications.filter(
+																	app => app.category_title === cat.name
+																).length
+															}
+														</Badge>
+													</SelectItem>
+												))}
+											</SelectContent>
+										</Select>
+									</div>
+
+									{/* Subkategoriya filtri */}
+									{currentSubcategories.length > 0 && (
+										<div>
+											<label className='block text-sm font-medium text-gray-700 mb-2'>
+												Subkategoriya
+											</label>
+											<Select
+												value={selectedSubcategory || ''}
+												onValueChange={setSelectedSubcategory}
+											>
+												<SelectTrigger className='w-full'>
+													<SelectValue placeholder='Subkategoriya tanlang' />
+												</SelectTrigger>
+												<SelectContent>
+													{currentSubcategories.map(sub => (
+														<SelectItem key={sub.id} value={sub.name}>
+															{sub.name}
+														</SelectItem>
+													))}
+												</SelectContent>
+											</Select>
+										</div>
+									)}
+
+									{/* Faol filtrlar */}
+									{(selectedCategory || selectedSubcategory) && (
+										<div className='pt-4 border-t'>
+											<h3 className='text-sm font-medium text-gray-700 mb-2'>
+												Faol Filtrlar
+											</h3>
+											<div className='flex flex-wrap gap-2'>
+												{selectedCategory && (
+													<Badge
+														variant='secondary'
+														className='cursor-pointer hover:bg-gray-200'
+														onClick={() => setSelectedCategory(null)}
+													>
+														{
+															categories.find(
+																c => c.name === selectedCategory
+															)?.name
+														}{' '}
+														×
+													</Badge>
+												)}
+												{selectedSubcategory && (
+													<Badge
+														variant='secondary'
+														className='cursor-pointer hover:bg-gray-200'
+														onClick={() => setSelectedSubcategory(null)}
+													>
+														{
+															currentSubcategories.find(
+																s => s.id.toString() === selectedSubcategory
+															)?.name
+														}{' '}
+														×
+													</Badge>
+												)}
+											</div>
+										</div>
+									)}
+								</div>
+							</CardContent>
+						</Card>
+					</div>
+
+					{/* O'ng kontent */}
+					<div className='lg:col-span-3'>
+						{/* Qidiruv paneli */}
+						<div className='mb-8'>
+							<div className='relative'>
+								<Search className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5' />
+								<Input
+									placeholder="Ism, familiya yoki pasport raqami bo'yicha qidirish..."
+									value={searchQuery}
+									onChange={e => setSearchQuery(e.target.value)}
+									className='pl-10 py-6 text-base shadow-md border-gray-300 focus:border-primary'
+								/>
+							</div>
+							<div className='mt-3 text-sm text-gray-500'>
+								Jami {filteredApps.length} ta ariza ({applications.length}{' '}
+								tadan)
+							</div>
+						</div>
+
+						{/* Ariza kartalari */}
+						{filteredApps.length > 0 ? (
+							<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+								{filteredApps.map(app => (
+									<Card
+										key={app.id}
+										className='group overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-200'
+									>
+										{/* Rasm qismi */}
+										<div className='relative h-48 overflow-hidden bg-gray-100'>
+											{app.images && app.images.length > 0 ? (
+												<Image
+													src={app.images[0] || '/api/placeholder/400/300'}
+													alt={app.full_name}
+													width={400}
+													height={300}
+													className='w-full h-full object-cover group-hover:scale-110 transition-transform duration-300'
+												/>
+											) : (
+												<div className='w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50'>
+													<div className='text-center'>
+														<div className='w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-r from-blue-100 to-indigo-100 flex items-center justify-center'>
+															<span className='text-2xl font-bold text-blue-600'>
+																{app.full_name.charAt(0)}
+															</span>
+														</div>
+														<p className='text-sm text-gray-500'>
+															Rasm mavjud emas
+														</p>
+													</div>
+												</div>
+											)}
+
+											{/* Status */}
+											<div className='absolute top-3 right-3'>
+												<Badge
+													className={`${getStatusColor(app.status)} text-white`}
+												>
+													{getStatusText(app.status)}
+												</Badge>
+											</div>
+
+											{/* Subkategoriya */}
+											<div className='absolute bottom-3 left-3'>
+												<Badge
+													variant='secondary'
+													className='bg-white/90 backdrop-blur-sm'
+												>
+													{/* {getSubcategoryName(app.subcategory_title )} */}
+												</Badge>
+											</div>
+										</div>
+
+										{/* Kontent */}
+										<CardContent className='p-5'>
+											{/* Ism va ID */}
+											<div className='flex items-start justify-between mb-3'>
+												<h3 className='text-lg font-bold text-gray-800 line-clamp-1'>
+													{app.full_name}
+												</h3>
+												<span className='text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded'>
+													ID: {app.id}
+												</span>
+											</div>
+
+											{/* Tavsif */}
+											{app.description && (
+												<p className='text-sm text-gray-600 mb-4 line-clamp-2'>
+													{app.description}
+												</p>
+											)}
+
+											{/* Ma'lumotlar */}
+											<div className='space-y-2 mb-4'>
+												<div className='flex items-center text-sm text-gray-600'>
+													<Phone className='w-4 h-4 mr-2 text-gray-400' />
+													<span>{app.phone_number}</span>
+												</div>
+
+												<div className='flex items-center text-sm text-gray-600'>
+													<Calendar className='w-4 h-4 mr-2 text-gray-400' />
+													<span>{formatDate(app.birth_date)}</span>
+												</div>
+
+												<div className='flex items-center text-sm text-gray-600'>
+													<MapPin className='w-4 h-4 mr-2 text-gray-400' />
+													<span className='line-clamp-1'>
+														{app.region}, {app.location}
+													</span>
+												</div>
+											</div>
+
+											{/* Kategoriya va pasport */}
+											<div className='flex items-center justify-between text-sm pt-3 border-t'>
+												<div className='font-medium text-gray-700'>
+													{/* {getCategoryName(app.category_title)} */}
+												</div>
+												<div className='text-gray-500'>
+													Pass: {app.passport_number}
+												</div>
+											</div>
+										</CardContent>
+
+										{/* Footer - Tugma */}
+										<CardFooter className='p-5 pt-0'>
+											<Button
+												className='w-full group/btn'
+												variant='default'
+												onClick={() =>
+													(window.location.href = `/application/${
+														app.slug || app.id
+													}`)
+												}
+											>
+												<Eye className='w-4 h-4 mr-2 group-hover/btn:animate-pulse' />
+												Batafsil Ko'rish
+											</Button>
+										</CardFooter>
+									</Card>
+								))}
+							</div>
+						) : (
+							<div className='text-center py-16'>
+								<div className='text-gray-400 mb-4'>
+									<Search className='w-16 h-16 mx-auto' />
+								</div>
+								<h3 className='text-xl font-semibold text-gray-600 mb-2'>
+									Hech qanday ariza topilmadi
+								</h3>
+								<p className='text-gray-500 mb-6'>
+									Qidiruv yoki filtrni o'zgartirib ko'ring.
+								</p>
+								<Button onClick={resetFilters}>
+									Barcha Filtrlarni Tozalash
+								</Button>
+							</div>
+						)}
+					</div>
+				</div>
+			</div>
+		</div>
+	)
+}

@@ -5,7 +5,7 @@ export const API_REQUEST = {
 	categories: `${baseUrl}/categories/`,
 	about:`${baseUrl}/about/`,
 	subcategories: `${baseUrl}/subcategories/`,
-	applications: `${baseUrl}/application/`,
+	applications: `${baseUrl}/applications/`,
 	homesettings: `${baseUrl}/home-settings/`,
 	aboutsettings: `${baseUrl}/about-settings/`,
 	google:`${baseUrl}/auth/google/`
