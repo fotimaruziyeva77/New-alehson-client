@@ -30,15 +30,16 @@ export interface Application {
   images: any[];
 }
 export interface NewsTypes {
-	id: number;
-	title: string;
-	description: string;
-	content: string;
-	region: string;
-	image: string;
-	created_date: string;
-	view_count: number;
-	slug: string;
+ id: number;
+  views: number;
+  image?: any;
+  image_url: string;
+  title: string;
+  description: string;
+  content: string;
+  region: string;
+  created_date: string;
+  slug: string;
   }
 
 export interface About {

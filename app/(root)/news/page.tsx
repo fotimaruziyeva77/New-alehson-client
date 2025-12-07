@@ -107,8 +107,10 @@ function NewsPage() {
 						{/* News Image */}
 						<div className='w-full h-48 overflow-hidden'>
 							<Image
-								src={`${process.env.NEXT_PUBLIC_APP_API_ENDPOINT}/media/${item.image}`}
+								src={`${item.image_url}`}
 								alt={item.title}
+								width={300}
+								height={300}
 								className='w-full h-full object-cover'
 							/>
 						</div>
@@ -122,7 +124,7 @@ function NewsPage() {
 								</h3>
 								<div className='flex gap-2'>
 									<Eye size={16} />
-									<span>{item.view_count}</span>
+									<span>{item.views}</span>
 								</div>
 							</div>
 
@@ -141,7 +143,7 @@ function NewsPage() {
 
 							{/* Read More Button */}
 							<div className='flex items-end justify-center gap-3 mt-5'>
-								<Link href={`/news/${item.id}`}>
+								<Link href={`/news/${item.slug}`}>
 									<Button variant='outline'>Ko'proq ko'rish</Button>
 								</Link>
 							</div>
