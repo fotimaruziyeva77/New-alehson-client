@@ -1,11 +1,12 @@
 import NewsDetailClient from '../components/newsdetails'
 
-type Props = {
-  params: {
-    slug: string
-  }
-}
 
-export default function Page({ params }: Props) {
-  return <NewsDetailClient slug={params.slug} />
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params
+
+  return <NewsDetailClient slug={slug} />
 }
